@@ -36,6 +36,10 @@ public class Employee {
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     private List<Order> lstOrder;
 
+    @OneToOne
+    @JoinColumn(name = "user")
+    private User user;
+
     public Employee() {
     }
 
@@ -46,6 +50,16 @@ public class Employee {
         this.phone = phone;
         this.address = address;
         this.status = status;
+    }
+
+    public Employee(String fullname, LocalDate dob, String email, String phone, String address, EmployeeStatus status, User user) {
+        this.fullname = fullname;
+        this.dob = dob;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.status = status;
+        this.user = user;
     }
 
     public long getId() {
@@ -112,16 +126,24 @@ public class Employee {
         this.lstOrder = lstOrder;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
-        return "{" +
-                "id=" + id +
-                ", fullname='" + fullname + '\'' +
+        return "Employee{" +
+                "fullname='" + fullname + '\'' +
                 ", dob=" + dob +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
                 ", status=" + status +
+                ", user=" + user +
                 '}';
     }
 
