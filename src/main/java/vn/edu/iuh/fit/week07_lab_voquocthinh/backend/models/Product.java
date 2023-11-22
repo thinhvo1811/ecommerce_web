@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "product")
+@Table(name = "products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -116,6 +116,13 @@ public class Product {
 
     public void setProductPrices(List<ProductPrice> productPrices) {
         this.productPrices = productPrices;
+    }
+
+    public int getSoldQuantity(){
+        int soldQuantity = 0;
+        for(int i = 0; i<orderDetails.size();i++)
+            soldQuantity += (int) orderDetails.get(i).getQuantity();
+        return soldQuantity;
     }
 
     @Override

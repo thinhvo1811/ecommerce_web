@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.ids.OrderDetailId;
 
 @Entity
-@Table(name = "order_detail")
+@Table(name = "order_details")
 @IdClass(OrderDetailId.class)
 public class OrderDetail {
     @Column(name = "quantity", nullable = false)

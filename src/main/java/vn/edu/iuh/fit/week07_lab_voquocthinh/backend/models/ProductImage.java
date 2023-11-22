@@ -3,7 +3,7 @@ package vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "product_image")
+@Table(name = "product_images")
 public class ProductImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
