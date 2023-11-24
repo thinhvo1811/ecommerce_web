@@ -11,4 +11,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByStatusIsNot(ProductStatus status);
     @Query("SELECT distinct p.manufacturer FROM Product p")
     List<String> findAllManufacturerName();
+    List<Product> findByManufacturerAndStatusIsNot(String manufacturerName,ProductStatus status);
 }

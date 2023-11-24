@@ -1053,6 +1053,11 @@
     color: var(--white-color);
 }
 
+.home-product__pagination{
+    margin: 48px 0 32px;
+    padding-left: 0;
+}
+
 /* footer */
 
 .footer{
