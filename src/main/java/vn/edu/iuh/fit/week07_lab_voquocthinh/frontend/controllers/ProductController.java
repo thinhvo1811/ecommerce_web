@@ -117,11 +117,70 @@ public class ProductController {
         int pageSize = size.orElse(10);
 
         List<Product> products = productService.findByStatusIsNotTerminatedNotPaging();
-        Page<Product> productPage = productService.findByManufacturerAndStatusIsNotTerminated(currentPage - 1, pageSize, name);
+        Page<Product> productPage = productService.findByManufacturerAndStatusIsNotTerminatedAndSortBySoldQuantity(currentPage - 1, pageSize, name);
         List<String> brands = productService.findAllManufacturerName();
         model.addAttribute("productPage", productPage);
         model.addAttribute("brands", brands);
         model.addAttribute("byManufacturer", 1);
+        model.addAttribute("sortType", 0);
+        model.addAttribute("name", name);
+        model.addAttribute("products", products);
+        int totalPage = productPage.getTotalPages();
+        if (totalPage > 0){
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPage)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+        return "index";
+    }
+
+    @GetMapping("/home/sort-by-price-asc/manufacturer/{name}")
+    public String showHomePageWithListProductByManufacturerSortByPriceAsc(
+            Model model,
+            @RequestParam("page") Optional<Integer> page,
+            @RequestParam("size") Optional<Integer> size,
+            @PathVariable("name") String name
+    ){
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(10);
+
+        List<Product> products = productService.findByStatusIsNotTerminatedNotPaging();
+        Page<Product> productPage = productService.findByManufacturerAndStatusIsNotTerminatedAndSortByPriceAsc(currentPage - 1, pageSize, name);
+        List<String> brands = productService.findAllManufacturerName();
+        model.addAttribute("productPage", productPage);
+        model.addAttribute("brands", brands);
+        model.addAttribute("byManufacturer", 1);
+        model.addAttribute("sortType", 1);
+        model.addAttribute("name", name);
+        model.addAttribute("products", products);
+        int totalPage = productPage.getTotalPages();
+        if (totalPage > 0){
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPage)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+        return "index";
+    }
+
+    @GetMapping("/home/sort-by-price-desc/manufacturer/{name}")
+    public String showHomePageWithListProductByManufacturerSortByPriceDesc(
+            Model model,
+            @RequestParam("page") Optional<Integer> page,
+            @RequestParam("size") Optional<Integer> size,
+            @PathVariable("name") String name
+    ){
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(10);
+
+        List<Product> products = productService.findByStatusIsNotTerminatedNotPaging();
+        Page<Product> productPage = productService.findByManufacturerAndStatusIsNotTerminatedAndSortByPriceDesc(currentPage - 1, pageSize, name);
+        List<String> brands = productService.findAllManufacturerName();
+        model.addAttribute("productPage", productPage);
+        model.addAttribute("brands", brands);
+        model.addAttribute("byManufacturer", 1);
+        model.addAttribute("sortType", 2);
         model.addAttribute("name", name);
         model.addAttribute("products", products);
         int totalPage = productPage.getTotalPages();

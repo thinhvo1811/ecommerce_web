@@ -103,10 +103,67 @@ public class ProductService {
         return productPage;
     }
 
-    public Page<Product> findByManufacturerAndStatusIsNotTerminated(int pageNo, int pageSize, String manufacturerName) {
+    public Page<Product> findByManufacturerAndStatusIsNotTerminatedAndSortBySoldQuantity(int pageNo, int pageSize, String manufacturerName) {
         int startItem = pageNo * pageSize;
         List<Product> list;
         List<Product> products = productRepository.findByManufacturerAndStatusIsNot(manufacturerName ,ProductStatus.TERMINATED);
+
+        Collections.sort(products, new Comparator<Product>() {
+            @Override
+            public int compare(Product o1, Product o2) {
+                return o2.getSoldQuantity() - o1.getSoldQuantity();
+            }
+        });
+
+        if (products.size() < startItem) {
+            list = Collections.emptyList();
+        } else {
+            int toIndex = Math.min(startItem + pageSize, products.size());
+            list = products.subList(startItem, toIndex);
+        }
+
+        Page<Product> productPage
+                = new PageImpl<>(list, PageRequest.of(pageNo, pageSize), products.size());
+
+        return productPage;
+    }
+
+    public Page<Product> findByManufacturerAndStatusIsNotTerminatedAndSortByPriceAsc(int pageNo, int pageSize, String manufacturerName) {
+        int startItem = pageNo * pageSize;
+        List<Product> list;
+        List<Product> products = productRepository.findByManufacturerAndStatusIsNot(manufacturerName ,ProductStatus.TERMINATED);
+
+        Collections.sort(products, new Comparator<Product>() {
+            @Override
+            public int compare(Product o1, Product o2) {
+                return (int) o1.getProductPrices().get(o1.getProductPrices().size()-1).getPrice() - (int) o2.getProductPrices().get(o2.getProductPrices().size()-1).getPrice();
+            }
+        });
+
+        if (products.size() < startItem) {
+            list = Collections.emptyList();
+        } else {
+            int toIndex = Math.min(startItem + pageSize, products.size());
+            list = products.subList(startItem, toIndex);
+        }
+
+        Page<Product> productPage
+                = new PageImpl<>(list, PageRequest.of(pageNo, pageSize), products.size());
+
+        return productPage;
+    }
+
+    public Page<Product> findByManufacturerAndStatusIsNotTerminatedAndSortByPriceDesc(int pageNo, int pageSize, String manufacturerName) {
+        int startItem = pageNo * pageSize;
+        List<Product> list;
+        List<Product> products = productRepository.findByManufacturerAndStatusIsNot(manufacturerName ,ProductStatus.TERMINATED);
+
+        Collections.sort(products, new Comparator<Product>() {
+            @Override
+            public int compare(Product o1, Product o2) {
+                return (int) o2.getProductPrices().get(o2.getProductPrices().size()-1).getPrice() - (int) o1.getProductPrices().get(o1.getProductPrices().size()-1).getPrice();
+            }
+        });
 
         if (products.size() < startItem) {
             list = Collections.emptyList();
