@@ -196,3 +196,7 @@ html{
 .text--primary{
     color: var(--primary-color);
 }
+
+.hidden{
+    visibility: hidden;
+}

@@ -157,10 +157,10 @@
                         </h3>
 
                         <ul class="category-list">
-                            <li th:class="${byManufacturer==0 ? 'category-item--active' : ''}" class="category-item">
+                            <li th:class="'category-item ' + ${byManufacturer==0 ? ' category-item--active' : ''}">
                                 <a th:href="@{/home}" class="category-item__link">Tất cả</a>
                             </li>
-                            <li th:class="${brand==name ? 'category-item--active' : ''}" class="category-item" th:each="brand:${brands}">
+                            <li th:class="'category-item ' + ${brand==name ? ' category-item--active' : ''}" th:each="brand:${brands}">
                                 <a th:href="@{/home/manufacturer/{name}(name=${brand})}" class="category-item__link" th:text="${brand}"></a>
                             </li>
                         </ul>
@@ -215,7 +215,7 @@
                     </div>
 
                     <ul class="pagination home-product__pagination" th:if="${productPage.totalPages > 0}">
-                        <li th:if="${productPage.number!=0}" class="pagination-item">
+                        <li th:class="'pagination-item ' + ${productPage.number==0 ? ' hidden' : ''}">
                             <a th:if="${byManufacturer==0 and sortType==0}" th:href="@{/home(size=${productPage.size}, page=${productPage.number})}" class="pagination-item__link">
                                 <i class="pagination-item__icon fas fa-angle-left"></i>
                             </a>
@@ -245,7 +245,7 @@
                             <a th:if="${byManufacturer==1 and productPage.totalPages>1 and sortType==2}" th:href="@{/home/sort-by-price-desc/manufacturer/{name}(size=${productPage.size}, page=${pageNumber}, name=${name})}" class="pagination-item__link" th:text="${pageNumber}"></a>
                         </li>
 
-                        <li th:if="${productPage.number!=productPage.totalPages - 1}" class="pagination-item">
+                        <li th:class="'pagination-item ' + ${productPage.number==productPage.totalPages - 1 ? ' hidden' : ''}">
                             <a th:if="${byManufacturer==0 and sortType==0}" th:href="@{/home(size=${productPage.size}, page=${productPage.number+2})}" class="pagination-item__link">
                                 <i class="pagination-item__icon fas fa-angle-right"></i>
                             </a>
