@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.enums.ProductStatus;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.Product;
+import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.ProductPrice;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.repositories.ProductRepository;
 
 import java.util.Collections;
@@ -29,6 +30,16 @@ public class ProductService {
         int startItem = pageNo * pageSize;
         List<Product> list;
         List<Product> products = productRepository.findByStatusIsNot(ProductStatus.TERMINATED);
+
+        for (Product product:products) {
+            List<ProductPrice> productPrices = product.getProductPrices();
+            Collections.sort(productPrices, new Comparator<ProductPrice>() {
+                @Override
+                public int compare(ProductPrice o1, ProductPrice o2) {
+                    return o1.getPrice_date_time().compareTo(o2.getPrice_date_time());
+                }
+            });
+        }
 
         Collections.sort(products, new Comparator<Product>() {
             @Override
@@ -56,6 +67,16 @@ public class ProductService {
         List<Product> list;
         List<Product> products = productRepository.findByStatusIsNot(ProductStatus.TERMINATED);
 
+        for (Product product:products) {
+            List<ProductPrice> productPrices = product.getProductPrices();
+            Collections.sort(productPrices, new Comparator<ProductPrice>() {
+                @Override
+                public int compare(ProductPrice o1, ProductPrice o2) {
+                    return o1.getPrice_date_time().compareTo(o2.getPrice_date_time());
+                }
+            });
+        }
+
         Collections.sort(products, new Comparator<Product>() {
             @Override
             public int compare(Product o1, Product o2) {
@@ -81,6 +102,16 @@ public class ProductService {
         int startItem = pageNo * pageSize;
         List<Product> list;
         List<Product> products = productRepository.findByStatusIsNot(ProductStatus.TERMINATED);
+
+        for (Product product:products) {
+            List<ProductPrice> productPrices = product.getProductPrices();
+            Collections.sort(productPrices, new Comparator<ProductPrice>() {
+                @Override
+                public int compare(ProductPrice o1, ProductPrice o2) {
+                    return o1.getPrice_date_time().compareTo(o2.getPrice_date_time());
+                }
+            });
+        }
 
         Collections.sort(products, new Comparator<Product>() {
             @Override
@@ -108,6 +139,16 @@ public class ProductService {
         List<Product> list;
         List<Product> products = productRepository.findByManufacturerAndStatusIsNot(manufacturerName ,ProductStatus.TERMINATED);
 
+        for (Product product:products) {
+            List<ProductPrice> productPrices = product.getProductPrices();
+            Collections.sort(productPrices, new Comparator<ProductPrice>() {
+                @Override
+                public int compare(ProductPrice o1, ProductPrice o2) {
+                    return o1.getPrice_date_time().compareTo(o2.getPrice_date_time());
+                }
+            });
+        }
+
         Collections.sort(products, new Comparator<Product>() {
             @Override
             public int compare(Product o1, Product o2) {
@@ -133,6 +174,16 @@ public class ProductService {
         List<Product> list;
         List<Product> products = productRepository.findByManufacturerAndStatusIsNot(manufacturerName ,ProductStatus.TERMINATED);
 
+        for (Product product:products) {
+            List<ProductPrice> productPrices = product.getProductPrices();
+            Collections.sort(productPrices, new Comparator<ProductPrice>() {
+                @Override
+                public int compare(ProductPrice o1, ProductPrice o2) {
+                    return o1.getPrice_date_time().compareTo(o2.getPrice_date_time());
+                }
+            });
+        }
+
         Collections.sort(products, new Comparator<Product>() {
             @Override
             public int compare(Product o1, Product o2) {
@@ -157,6 +208,16 @@ public class ProductService {
         int startItem = pageNo * pageSize;
         List<Product> list;
         List<Product> products = productRepository.findByManufacturerAndStatusIsNot(manufacturerName ,ProductStatus.TERMINATED);
+
+        for (Product product:products) {
+            List<ProductPrice> productPrices = product.getProductPrices();
+            Collections.sort(productPrices, new Comparator<ProductPrice>() {
+                @Override
+                public int compare(ProductPrice o1, ProductPrice o2) {
+                    return o1.getPrice_date_time().compareTo(o2.getPrice_date_time());
+                }
+            });
+        }
 
         Collections.sort(products, new Comparator<Product>() {
             @Override
