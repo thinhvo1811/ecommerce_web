@@ -23,7 +23,7 @@ public class Week07LabVoquocthinhApplication {
 //	@Bean
 	CommandLineRunner initData() {
 		return args -> {
-			List<Product> products = productRepository.findByManufacturerAndStatusIsNot("LEVENTS", ProductStatus.TERMINATED);
+			List<Product> products = productRepository.findByNameLikeAndStatusIsNot("Giày",ProductStatus.TERMINATED);
 			products.forEach(System.out::println);
 		};
 	}

@@ -1,5 +1,6 @@
 package vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ public class ProductPrice {
 
     @JoinColumn(name = "product_id",foreignKey = @ForeignKey(name = "pid"))
     @ManyToOne
+    @JsonIgnore
     private Product product;
     @Column(name = "price_date_time")
     private LocalDateTime price_date_time;

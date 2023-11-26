@@ -1,5 +1,6 @@
 package vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.enums.ProductStatus;
 
@@ -31,6 +32,7 @@ public class Product {
     private List<ProductImage> productImageList = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<OrderDetail> orderDetails = new ArrayList<>();
     @OneToMany(mappedBy = "product")
     private List<ProductPrice> productPrices = new ArrayList<>();

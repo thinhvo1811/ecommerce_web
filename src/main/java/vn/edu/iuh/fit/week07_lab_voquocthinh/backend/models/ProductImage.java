@@ -1,5 +1,6 @@
 package vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -9,8 +10,6 @@ public class ProductImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "image_id")
     private long image_id;
-    /*@Column(name = "product_id")
-    private long product_id;*/
     @Column(name = "path", length = 250, nullable = false)
     private String path;
     @Column(name = "alternative", length = 250)
@@ -18,6 +17,7 @@ public class ProductImage {
 
     @ManyToOne
     @JoinColumn(name = "product_id")
+    @JsonIgnore
     private Product product;
 
     public ProductImage() {

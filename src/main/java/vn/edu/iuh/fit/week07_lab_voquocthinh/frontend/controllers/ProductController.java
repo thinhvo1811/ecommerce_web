@@ -192,4 +192,15 @@ public class ProductController {
         }
         return "index";
     }
+
+    @GetMapping("/product-details/{id}")
+    public ModelAndView showProductDetail(@PathVariable("id") Long id){
+        ModelAndView modelAndView = new ModelAndView();
+        Product product = productService.findById(id);
+        List<Product> products = productService.findByStatusIsNotTerminatedNotPaging();
+        modelAndView.addObject("product", product);
+        modelAndView.addObject("products", products);
+        modelAndView.setViewName("product/product-details");
+        return modelAndView;
+    }
 }

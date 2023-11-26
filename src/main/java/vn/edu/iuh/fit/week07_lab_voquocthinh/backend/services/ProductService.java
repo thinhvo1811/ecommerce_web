@@ -22,6 +22,10 @@ public class ProductService {
         return productRepository.findByStatusIsNot(ProductStatus.TERMINATED);
     }
 
+    public List<Product> findByKeywordAndStatusIsNotTerminated(String keyword){
+        return productRepository.findByNameLikeAndStatusIsNot(keyword, ProductStatus.TERMINATED);
+    }
+
     public List<String> findAllManufacturerName(){
         return productRepository.findAllManufacturerName();
     }
@@ -237,5 +241,19 @@ public class ProductService {
                 = new PageImpl<>(list, PageRequest.of(pageNo, pageSize), products.size());
 
         return productPage;
+    }
+
+    public Product findById(Long id){
+        Product product = productRepository.findById(id).get();
+
+        List<ProductPrice> productPrices = product.getProductPrices();
+        Collections.sort(productPrices, new Comparator<ProductPrice>() {
+            @Override
+            public int compare(ProductPrice o1, ProductPrice o2) {
+                return o1.getPrice_date_time().compareTo(o2.getPrice_date_time());
+            }
+        });
+
+        return product;
     }
 }

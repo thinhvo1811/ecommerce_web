@@ -48,7 +48,7 @@
                     <li class="navbar-item navbar-item--strong navbar-item--login">Đăng Nhập</li>
 
                     <li class="navbar-item navbar-user">
-                        <img src="https://scontent.fsgn5-2.fna.fbcdn.net/v/t1.6435-9/117354824_792500984821445_4185575291286150690_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=HEgLTVgd_LMAX-YGxN-&_nc_oc=AQl4xNJnSJXRxNzwzCU7zoGCF8fEjyNp8e46iTHtTP_XQ_xhdnB39irK9p2p7w_LAR7PP_OAdr6BuxGvjaztWagp&_nc_ht=scontent.fsgn5-2.fna&oh=00_AfAtBI1aq0bhPCtLkVecwKHMRkTwUSpMFwcwZr9thYcqCA&oe=653D18D3" alt="" class="navbar-user-avatar">
+<!--                        <img src="https://scontent.fsgn5-2.fna.fbcdn.net/v/t1.6435-9/117354824_792500984821445_4185575291286150690_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=HEgLTVgd_LMAX-YGxN-&_nc_oc=AQl4xNJnSJXRxNzwzCU7zoGCF8fEjyNp8e46iTHtTP_XQ_xhdnB39irK9p2p7w_LAR7PP_OAdr6BuxGvjaztWagp&_nc_ht=scontent.fsgn5-2.fna&oh=00_AfAtBI1aq0bhPCtLkVecwKHMRkTwUSpMFwcwZr9thYcqCA&oe=653D18D3" alt="" class="navbar-user-avatar">-->
                         <span class="navbar-user-name"></span>
 
                         <ul class="navbar-user-menu navbar-user-menu--customer">
@@ -150,122 +150,42 @@
     <div class="app__container">
         <div class="grid wide">
             <div class="row sm-gutter app__content">
-                <div class="col l-2 m-0 c-0">
-                    <nav class="category">
-                        <h3 class="category__heading">
-                            Thương hiệu
-                        </h3>
-
-                        <ul class="category-list">
-                            <li th:class="'category-item ' + ${byManufacturer==0 ? ' category-item--active' : ''}">
-                                <a th:href="@{/home}" class="category-item__link">Tất cả</a>
-                            </li>
-                            <li th:class="'category-item ' + ${brand==name ? ' category-item--active' : ''}" th:each="brand:${brands}">
-                                <a th:href="@{/home/manufacturer/{name}(name=${brand})}" class="category-item__link" th:text="${brand}"></a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-
-                <div class="col l-10 m-12 c-12">
-                    <div class="home-filter hide-on-mobile-tablet">
-                        <span class="home-filter__label">Sắp xếp theo</span>
-                        <a th:if="${byManufacturer==0}" th:class="'home-filter__btn btn ' + ${sortType==0 ? ' btn--primary' : ''}" th:href="@{/home}" >Bán chạy</a>
-                        <a th:if="${byManufacturer==1}" th:class="'home-filter__btn btn ' + ${sortType==0 ? ' btn--primary' : ''}" th:href="@{/home/manufacturer/{name}(name = ${name})}" >Bán chạy</a>
-
-                        <div class="select-input">
-                            <span th:class="'select-input__label ' + ${sortType==1 or sortType==2 ? ' text--primary' : ''}">Giá</span>
-                            <i class="select-input__icon fas fa-angle-down"></i>
-
-                            <!-- List options -->
-                            <ul class="select-input__list">
-                                <li class="select-input__item">
-                                    <a th:if="${byManufacturer==0}" th:class="'select-input__link ' + ${sortType==1 ? ' text--primary' : ''}" th:href="@{/home/sort-by-price-asc}" >Giá thấp đến cao</a>
-                                    <a th:if="${byManufacturer==1}" th:class="'select-input__link ' + ${sortType==1 ? ' text--primary' : ''}" th:href="@{/home/sort-by-price-asc/manufacturer/{name}(name = ${name})}" >Giá thấp đến cao</a>
-                                </li>
-                                <li class="select-input__item">
-                                    <a th:if="${byManufacturer==0}" th:class="'select-input__link ' + ${sortType==2 ? ' text--primary' : ''}" th:href="@{/home/sort-by-price-desc}" >Giá cao đến thấp</a>
-                                    <a th:if="${byManufacturer==1}" th:class="'select-input__link ' + ${sortType==2 ? ' text--primary' : ''}" th:href="@{/home/sort-by-price-desc/manufacturer/{name}(name = ${name})}" >Giá cao đến thấp</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="home-product">
+                <div class="col l-12 m-12 c-12">
+                    <div class="product-detail">
                         <div class="row sm-gutter">
-                            <!-- Product item -->
-                            <div class="col l-2-4 m-4 c-6" th:each="product, iStat: ${productPage.content}">
-                                <a class="home-product-item" th:href="@{/product-details/{id}(id=${product.product_id})}">
-                                    <div class="home-product-item__img"  th:style="'background-image:url('+ *{product.productImageList[0].path} +');'"></div>
-                                    <h4 class="home-product-item__name" th:text="*{product.name}"></h4>
-                                    <div class="home-product-item__price">
-                                        <span class="home-product-item__price-current" th:text="${#numbers.formatDecimal(product.productPrices[product.productPrices.size()-1].price, 0, 'COMMA', 0, 'POINT')} + 'đ '"></span> <span class="home-product-item__unit" th:text="' / ' + *{product.unit}"></span>
+                            <div class="col l-5 m-5 c-5">
+                                <div class="product-detail__img">
+                                    <div class="product-detail__img-main" th:style="'background-image:url('+ ${product.productImageList[0].path} +');'">
+
                                     </div>
-                                    <div class="home-product-item__detail">
-                                        <span class="home-product-item__brand" th:text="*{product.manufacturer}"></span>
-                                        <span class="home-product-item__sold" th:text="${product.getSoldQuantity()} + ' đã bán'"></span>
+                                    <div class="product-detail__img-list">
+                                        <ul class="product-detail__img-list--list">
+                                            <li th:each="img: ${product.productImageList}" class="product-detail__img-list--item" th:style="'background-image:url('+ ${img.path} +');'"></li>
+                                        </ul>
                                     </div>
-                                    <div class="home-product-item__favourite" th:if="*{product.status.name() == 'IN_ACTIVE'}">
-                                        <i class="fas fa-check"></i>
-                                        <span>Tạm ngưng</span>
+                                </div>
+                            </div>
+                            <div class="col l-7 m-7 c-7">
+                                <div class="product-detail__info">
+                                    <div class="product-detail__info-header">
+                                        <div class="product-detail__info-name" th:text="${product.name}"></div>
+                                        <div class="product-detail__info-sold-quantity" th:text="${product.getSoldQuantity()} + ' đã bán'"></div>
+                                        <div class="product-detail__info-price" th:text="${#numbers.formatDecimal(product.productPrices[product.productPrices.size()-1].price, 0, 'COMMA', 0, 'POINT')} + 'đ '"></div>
                                     </div>
-                                </a>
+                                    <div class="product-detail__info-footer">
+                                        <div class="product-detail__info-quantity">
+                                            <span class="product-detail__info-quantity-label">Số lượng:</span>
+                                            <input type="number" class="product-detail__info-quantity-input" value="1"></input>
+                                        </div>
+                                        <div class="product-detail__info-btn">
+                                            <div class="product-detail__info-btn--add-cart btn">Thêm vào giỏ hàng</div>
+                                            <div class="product-detail__info-btn--buy btn btn--primary">Mua hàng</div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <ul class="pagination home-product__pagination" th:if="${productPage.totalPages > 0}">
-                        <li th:class="'pagination-item ' + ${productPage.number==0 ? ' hidden' : ''}">
-                            <a th:if="${byManufacturer==0 and sortType==0}" th:href="@{/home(size=${productPage.size}, page=${productPage.number})}" class="pagination-item__link">
-                                <i class="pagination-item__icon fas fa-angle-left"></i>
-                            </a>
-                            <a th:if="${byManufacturer==0 and sortType==1}" th:href="@{/home/sort-by-price-asc(size=${productPage.size}, page=${productPage.number})}" class="pagination-item__link">
-                                <i class="pagination-item__icon fas fa-angle-left"></i>
-                            </a>
-                            <a th:if="${byManufacturer==0 and sortType==2}" th:href="@{/home/sort-by-price-desc(size=${productPage.size}, page=${productPage.number})}" class="pagination-item__link">
-                                <i class="pagination-item__icon fas fa-angle-left"></i>
-                            </a>
-                            <a th:if="${byManufacturer==1 and sortType==0}" th:href="@{/home/manufacturer/{name}(size=${productPage.size}, page=${productPage.number}, name=${name})}" class="pagination-item__link">
-                                <i class="pagination-item__icon fas fa-angle-left"></i>
-                            </a>
-                            <a th:if="${byManufacturer==1 and sortType==1}" th:href="@{/home/sort-by-price-asc/manufacturer/{name}(size=${productPage.size}, page=${productPage.number}, name=${name})}" class="pagination-item__link">
-                                <i class="pagination-item__icon fas fa-angle-left"></i>
-                            </a>
-                            <a th:if="${byManufacturer==1 and sortType==2}" th:href="@{/home/sort-by-price-desc/manufacturer/{name}(size=${productPage.size}, page=${productPage.number}, name=${name})}" class="pagination-item__link">
-                                <i class="pagination-item__icon fas fa-angle-left"></i>
-                            </a>
-                        </li>
-
-                        <li th:class="${pageNumber==productPage.number + 1} ? 'pagination-item--active'" th:each="pageNumber : ${pageNumbers}">
-                            <a th:if="${byManufacturer==0 and productPage.totalPages>1 and sortType==0}" th:href="@{/home(size=${productPage.size}, page=${pageNumber})}" class="pagination-item__link" th:text="${pageNumber}"></a>
-                            <a th:if="${byManufacturer==0 and productPage.totalPages>1 and sortType==1}" th:href="@{/home/sort-by-price-asc(size=${productPage.size}, page=${pageNumber})}" class="pagination-item__link" th:text="${pageNumber}"></a>
-                            <a th:if="${byManufacturer==0 and productPage.totalPages>1 and sortType==2}" th:href="@{/home/sort-by-price-desc(size=${productPage.size}, page=${pageNumber})}" class="pagination-item__link" th:text="${pageNumber}"></a>
-                            <a th:if="${byManufacturer==1 and productPage.totalPages>1 and sortType==0}" th:href="@{/home/manufacturer/{name}(size=${productPage.size}, page=${pageNumber}, name=${name})}" class="pagination-item__link" th:text="${pageNumber}"></a>
-                            <a th:if="${byManufacturer==1 and productPage.totalPages>1 and sortType==1}" th:href="@{/home/sort-by-price-asc/manufacturer/{name}(size=${productPage.size}, page=${pageNumber}, name=${name})}" class="pagination-item__link" th:text="${pageNumber}"></a>
-                            <a th:if="${byManufacturer==1 and productPage.totalPages>1 and sortType==2}" th:href="@{/home/sort-by-price-desc/manufacturer/{name}(size=${productPage.size}, page=${pageNumber}, name=${name})}" class="pagination-item__link" th:text="${pageNumber}"></a>
-                        </li>
-
-                        <li th:class="'pagination-item ' + ${productPage.number==productPage.totalPages - 1 ? ' hidden' : ''}">
-                            <a th:if="${byManufacturer==0 and sortType==0}" th:href="@{/home(size=${productPage.size}, page=${productPage.number+2})}" class="pagination-item__link">
-                                <i class="pagination-item__icon fas fa-angle-right"></i>
-                            </a>
-                            <a th:if="${byManufacturer==0 and sortType==1}" th:href="@{/home/sort-by-price-asc(size=${productPage.size}, page=${productPage.number+2})}" class="pagination-item__link">
-                                <i class="pagination-item__icon fas fa-angle-right"></i>
-                            </a>
-                            <a th:if="${byManufacturer==0 and sortType==2}" th:href="@{/home/sort-by-price-desc(size=${productPage.size}, page=${productPage.number+2})}" class="pagination-item__link">
-                                <i class="pagination-item__icon fas fa-angle-right"></i>
-                            </a>
-                            <a th:if="${byManufacturer==1 and sortType==0}" th:href="@{/home/manufacturer/{name}(size=${productPage.size}, page=${productPage.number+2}, name=${name})}" class="pagination-item__link">
-                                <i class="pagination-item__icon fas fa-angle-right"></i>
-                            </a>
-                            <a th:if="${byManufacturer==1 and sortType==1}" th:href="@{/home/sort-by-price-asc/manufacturer/{name}(size=${productPage.size}, page=${productPage.number+2}, name=${name})}" class="pagination-item__link">
-                                <i class="pagination-item__icon fas fa-angle-right"></i>
-                            </a>
-                            <a th:if="${byManufacturer==1 and sortType==2}" th:href="@{/home/sort-by-price-desc/manufacturer/{name}(size=${productPage.size}, page=${productPage.number+2}, name=${name})}" class="pagination-item__link">
-                                <i class="pagination-item__icon fas fa-angle-right"></i>
-                            </a>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </div>
@@ -443,6 +363,6 @@
     </div>
 </div>
 
-<script th:src="@{/js/index.js}"></script>
+<script th:src="@{/js/product-details.js}"></script>
 </body>
 </html>
