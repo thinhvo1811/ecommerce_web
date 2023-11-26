@@ -1,9 +1,56 @@
 const headerSearchInput = document.querySelector('.header__search-input')
 const headerHistoryList = document.querySelector('.header__search-history-list')
+const modal = document.querySelector('.modal')
+const modalOverlay = document.querySelector('.modal__overlay')
+const register = document.querySelector('.navbar-item--register')
+const login = document.querySelector('.navbar-item--login')
+const registerForm = document.querySelector('.auth-form--register')
+const loginForm = document.querySelector('.auth-form--login')
+const backRegisterBtn = document.querySelector('.auth-form--register .btn.auth-form__controls-back')
+const backLoginBtn = document.querySelector('.auth-form--login .btn.auth-form__controls-back')
+const switchRegisterBtn = document.querySelector('.auth-form--register .auth-form__switch-btn')
+const switchLoginBtn = document.querySelector('.auth-form--login .auth-form__switch-btn')
 
 headerHistoryList.onmousedown = (e) => {
     e.preventDefault()
 }
+
+modalOverlay.onclick = () => {
+    modal.style.display = "none"
+    registerForm.style.display = "none"
+    loginForm.style.display = "none"
+}
+
+register.onclick = () => {
+    modal.style.display = "flex"
+    registerForm.style.display = "block"
+}
+
+login.onclick = () => {
+    modal.style.display = "flex"
+    loginForm.style.display = "block"
+}
+
+backRegisterBtn.onclick = () => {
+    registerForm.style.display = "none"
+    modal.style.display = "none"
+}
+
+backLoginBtn.onclick = () => {
+    loginForm.style.display = "none"
+    modal.style.display = "none"
+}
+
+switchRegisterBtn.onclick = () => {
+    registerForm.style.display = "none"
+    loginForm.style.display = "block"
+}
+
+switchLoginBtn.onclick = () => {
+    loginForm.style.display = "none"
+    registerForm.style.display = "block"
+}
+
 
 const getAllProducts = (keyword, callback) => {
     fetch(`/products-by-keyword/${keyword}`)

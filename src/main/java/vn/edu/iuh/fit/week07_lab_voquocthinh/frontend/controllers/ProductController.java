@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.Customer;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.Product;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.ProductImage;
+import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.User;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.repositories.ProductRepository;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.services.ProductService;
 
@@ -37,6 +39,10 @@ public class ProductController {
         List<Product> products = productService.findByStatusIsNotTerminatedNotPaging();
         Page<Product> productPage = productService.findByStatusIsNotTerminatedAndSortBySoldQuantity(currentPage - 1, pageSize);
         List<String> brands = productService.findAllManufacturerName();
+        Customer customer = new Customer();
+        customer.setUser(new User());
+        model.addAttribute("customer", customer);
+        model.addAttribute("user", customer.getUser());
         model.addAttribute("productPage", productPage);
         model.addAttribute("brands", brands);
         model.addAttribute("byManufacturer", 0);
@@ -64,6 +70,10 @@ public class ProductController {
         List<Product> products = productService.findByStatusIsNotTerminatedNotPaging();
         Page<Product> productPage = productService.findByStatusIsNotTerminatedAndSortByPriceAsc(currentPage - 1, pageSize);
         List<String> brands = productService.findAllManufacturerName();
+        Customer customer = new Customer();
+        customer.setUser(new User());
+        model.addAttribute("customer", customer);
+        model.addAttribute("user", customer.getUser());
         model.addAttribute("productPage", productPage);
         model.addAttribute("brands", brands);
         model.addAttribute("byManufacturer", 0);
@@ -91,6 +101,10 @@ public class ProductController {
         List<Product> products = productService.findByStatusIsNotTerminatedNotPaging();
         Page<Product> productPage = productService.findByStatusIsNotTerminatedAndSortByPriceDesc(currentPage - 1, pageSize);
         List<String> brands = productService.findAllManufacturerName();
+        Customer customer = new Customer();
+        customer.setUser(new User());
+        model.addAttribute("customer", customer);
+        model.addAttribute("user", customer.getUser());
         model.addAttribute("productPage", productPage);
         model.addAttribute("brands", brands);
         model.addAttribute("byManufacturer", 0);
@@ -119,6 +133,10 @@ public class ProductController {
         List<Product> products = productService.findByStatusIsNotTerminatedNotPaging();
         Page<Product> productPage = productService.findByManufacturerAndStatusIsNotTerminatedAndSortBySoldQuantity(currentPage - 1, pageSize, name);
         List<String> brands = productService.findAllManufacturerName();
+        Customer customer = new Customer();
+        customer.setUser(new User());
+        model.addAttribute("customer", customer);
+        model.addAttribute("user", customer.getUser());
         model.addAttribute("productPage", productPage);
         model.addAttribute("brands", brands);
         model.addAttribute("byManufacturer", 1);
@@ -148,6 +166,10 @@ public class ProductController {
         List<Product> products = productService.findByStatusIsNotTerminatedNotPaging();
         Page<Product> productPage = productService.findByManufacturerAndStatusIsNotTerminatedAndSortByPriceAsc(currentPage - 1, pageSize, name);
         List<String> brands = productService.findAllManufacturerName();
+        Customer customer = new Customer();
+        customer.setUser(new User());
+        model.addAttribute("customer", customer);
+        model.addAttribute("user", customer.getUser());
         model.addAttribute("productPage", productPage);
         model.addAttribute("brands", brands);
         model.addAttribute("byManufacturer", 1);
@@ -177,6 +199,10 @@ public class ProductController {
         List<Product> products = productService.findByStatusIsNotTerminatedNotPaging();
         Page<Product> productPage = productService.findByManufacturerAndStatusIsNotTerminatedAndSortByPriceDesc(currentPage - 1, pageSize, name);
         List<String> brands = productService.findAllManufacturerName();
+        Customer customer = new Customer();
+        customer.setUser(new User());
+        model.addAttribute("customer", customer);
+        model.addAttribute("user", customer.getUser());
         model.addAttribute("productPage", productPage);
         model.addAttribute("brands", brands);
         model.addAttribute("byManufacturer", 1);
@@ -198,6 +224,10 @@ public class ProductController {
         ModelAndView modelAndView = new ModelAndView();
         Product product = productService.findById(id);
         List<Product> products = productService.findByStatusIsNotTerminatedNotPaging();
+        Customer customer = new Customer();
+        customer.setUser(new User());
+        modelAndView.addObject("customer", customer);
+        modelAndView.addObject("user", customer.getUser());
         modelAndView.addObject("product", product);
         modelAndView.addObject("products", products);
         modelAndView.setViewName("product/product-details");

@@ -298,37 +298,37 @@
                     <span class="auth-form__switch-btn">Đăng nhập</span>
                 </div>
 
-                <div class="auth-form__form">
+                <form class="auth-form__form" th:object="${customer}" th:action="@{/register}" method="post">
                     <div class="auth-form__group form-group">
-                        <input type="text" class="auth-form__input" rules="required" name="register-username" placeholder="Tên đăng nhập">
+                        <input type="text" class="auth-form__input" rules="required" name="register-username" placeholder="Tên đăng nhập" th:field="${user.username}">
                         <span class="form-message"></span>
                     </div>
                     <div class="auth-form__group form-group">
-                        <input type="password" class="auth-form__input" rules="required|min:6" name="register-password" placeholder="Mật khẩu">
+                        <input type="password" class="auth-form__input" rules="required|min:6" name="register-password" placeholder="Mật khẩu" th:field="${user.password}">
                         <span class="form-message"></span>
                     </div>
                     <div class="auth-form__group form-group">
-                        <input type="text" class="auth-form__input" rules="required" name="register-name" placeholder="Tên của bạn">
+                        <input type="text" class="auth-form__input" rules="required" name="register-name" placeholder="Tên của bạn" th:field="*{name}">
                         <span class="form-message"></span>
                     </div>
                     <div class="auth-form__group form-group">
-                        <input type="email" class="auth-form__input" rules="required|email" name="register-email" placeholder="Email của bạn">
+                        <input type="email" class="auth-form__input" rules="required|email" name="register-email" placeholder="Email của bạn"  th:field="*{email}">
                         <span class="form-message"></span>
                     </div>
                     <div class="auth-form__group form-group">
-                        <input type="text" class="auth-form__input" rules="required|phone" name="register-phone" placeholder="Số điện thoại của bạn">
+                        <input type="text" class="auth-form__input" rules="required|phone" name="register-phone" placeholder="Số điện thoại của bạn"  th:field="*{phone}">
                         <span class="form-message"></span>
                     </div>
                     <div class="auth-form__group form-group">
-                        <input type="text" class="auth-form__input" rules="required" name="register-address" placeholder="Địa chỉ của bạn">
+                        <input type="text" class="auth-form__input" rules="required" name="register-address" placeholder="Địa chỉ của bạn"  th:field="*{address}">
                         <span class="form-message"></span>
                     </div>
-                </div>
+                    <div class="auth-form__controls">
+                        <button class="btn auth-form__controls-back btn--normal">TRỞ LẠI</button>
+                        <button type="submit" class="btn btn--primary btn--register">ĐĂNG KÝ</button>
+                    </div>
+                </form>
 
-                <div class="auth-form__controls">
-                    <button class="btn auth-form__controls-back btn--normal">TRỞ LẠI</button>
-                    <button class="btn btn--primary btn--register">ĐĂNG KÝ</button>
-                </div>
             </div>
         </div>
 
@@ -340,24 +340,21 @@
                     <span class="auth-form__switch-btn">Đăng ký</span>
                 </div>
 
-                <div class="auth-form__form">
+                <form class="auth-form__form" th:object="${user}" th:action="@{/login}" method="post">
                     <div class="auth-form__group form-group">
-                        <input type="text" class="auth-form__input" rules="required" name="login-username" placeholder="Tên đăng nhập">
+                        <input type="text" class="auth-form__input" rules="required" name="login-username" placeholder="Tên đăng nhập"  th:field="*{username}">
                         <span class="form-message"></span>
                     </div>
                     <div class="auth-form__group form-group">
-                        <input type="password" class="auth-form__input" rules="required|min:6" name="login-password" placeholder="Mật khẩu">
+                        <input type="password" class="auth-form__input" rules="required|min:6" name="login-password" placeholder="Mật khẩu"  th:field="*{password}">
                         <span class="form-message"></span>
                     </div>
-                </div>
 
-                <div class="auth-form__controls">
-                    <button class="btn auth-form__controls-back btn--normal">TRỞ LẠI</button>
-                    <button class="btn btn--primary btn--login btn--login-customer">ĐĂNG NHẬP CHO KHÁCH HÀNG</button>
-                </div>
-                <div class="auth-form__controls">
-                    <button class="btn btn--primary btn--login btn--login-employee">ĐĂNG NHẬP CHO NHÂN VIÊN</button>
-                </div>
+                    <div class="auth-form__controls">
+                        <button class="btn auth-form__controls-back btn--normal">TRỞ LẠI</button>
+                        <button type="submit" class="btn btn--primary btn--login btn--login-customer">ĐĂNG NHẬP</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
