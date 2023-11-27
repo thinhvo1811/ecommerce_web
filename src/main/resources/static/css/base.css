@@ -204,3 +204,15 @@ html{
 .none{
     display: none !important;
 }
+
+.pb-70{
+    padding-bottom: 70px !important;
+}
+
+.pt-70{
+    padding-top: 70px !important;
+}
+
+.right{
+    float: right !important;
+}

@@ -62,4 +62,39 @@ public class HomeController {
         session.removeAttribute("customerSession");
         return "redirect:/home";
     }
+
+    @GetMapping("/admin/login")
+    public ModelAndView loginAdmin(){
+        ModelAndView modelAndView = new ModelAndView();
+        User user = new User();
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName("admin/login");
+        return modelAndView;
+    }
+
+    @PostMapping("/admin/check-login")
+    public String checkLoginAdmin(@ModelAttribute("user") User user,
+                             HttpSession session) {
+        Optional<User> user1 = userRepository.findById(user.getUsername());
+        if (user1.isPresent()){
+            if(user1.get().getPassword().equals(user.getPassword()) && user1.get().getType().equals(UserType.EMPLOYEE)){
+                session.setAttribute("adminSession",user1.get());
+                return "redirect:/admin/my-account";
+            }
+            else {
+                return "redirect:/admin/login";
+            }
+        }
+        else {
+            return "redirect:/admin/login";
+        }
+    }
+
+    @GetMapping("/admin/logout")
+    public String logoutAdmin(
+            HttpSession session
+    ){
+        session.removeAttribute("adminSession");
+        return "redirect:/admin/login";
+    }
 }
