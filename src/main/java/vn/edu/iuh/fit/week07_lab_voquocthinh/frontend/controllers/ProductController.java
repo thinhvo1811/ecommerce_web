@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.Customer;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.Product;
-import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.ProductImage;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.User;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.repositories.ProductRepository;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.services.ProductService;
@@ -59,7 +58,7 @@ public class ProductController {
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
-        return "index";
+        return "client/home";
     }
 
     @GetMapping("/home/sort-by-price-asc")
@@ -93,7 +92,7 @@ public class ProductController {
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
-        return "index";
+        return "client/home";
     }
 
     @GetMapping("/home/sort-by-price-desc")
@@ -127,7 +126,7 @@ public class ProductController {
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
-        return "index";
+        return "client/home";
     }
 
     @GetMapping("/home/manufacturer/{name}")
@@ -163,7 +162,7 @@ public class ProductController {
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
-        return "index";
+        return "client/home";
     }
 
     @GetMapping("/home/sort-by-price-asc/manufacturer/{name}")
@@ -199,7 +198,7 @@ public class ProductController {
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
-        return "index";
+        return "client/home";
     }
 
     @GetMapping("/home/sort-by-price-desc/manufacturer/{name}")
@@ -235,7 +234,7 @@ public class ProductController {
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
-        return "index";
+        return "client/home";
     }
 
     @GetMapping("/product-details/{id}")
@@ -252,7 +251,7 @@ public class ProductController {
         modelAndView.addObject("user", customer.getUser());
         modelAndView.addObject("product", product);
         modelAndView.addObject("products", products);
-        modelAndView.setViewName("product/product-details");
+        modelAndView.setViewName("client/product-details");
         return modelAndView;
     }
 }

@@ -51,7 +51,7 @@
                         <img src="https://scontent.fsgn5-2.fna.fbcdn.net/v/t1.6435-9/117354824_792500984821445_4185575291286150690_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=be3454&_nc_eui2=AeHFPE54Jnb_R-6bpEie8CjtHdy-X2qivg8d3L5faqK-D30oEww2QkjtdwkWUJX2tYPVrFfmWNQyGnC4H1eZZQUR&_nc_ohc=gQ5MZtDWGgYAX_RTM6f&_nc_oc=AQmpdZkWdUejwEVpJI3C9doO-bGuhU_927MQvrqI0GBn5aFo2n0BNlJC5mf8ZPUVdkhhQzOheux_-W6lxVAXKC8h&_nc_ht=scontent.fsgn5-2.fna&oh=00_AfDs74MiZMegTSaUawI2URnDmiT-dfTpIKXoi2gCrqYvyQ&oe=658BC253" alt=User class="navbar-user-avatar">
                         <span class="navbar-user-name" th:text="${customerSession != null ? customerSession.username : ''}"></span>
 
-                        <ul th:class="'navbar-user-menu navbar-user-menu--customer ' + ${customerSession != null ? (customerSession.type.name() == 'EMPLOYEE' ? ' none' : '') : ''}">
+                        <ul class="navbar-user-menu navbar-user-menu--customer">
                             <li class="navbar-user-item">
                                 <a th:href="@{/customer/my-account}">Tài khoản của tôi</a>
                             </li>
@@ -64,17 +64,17 @@
                         </ul>
 
 
-                        <ul th:class="'navbar-user-menu navbar-user-menu--employee ' + ${customerSession != null ? (customerSession.type.name() == 'CUSTOMER' ? ' none' : '') : ''}">
-                            <li class="navbar-user-item">
-                                <a href="#">Thống kê đơn hàng</a>
-                            </li>
-                            <li class="navbar-user-item">
-                                <a href="#">Vẽ biểu đồ giá</a>
-                            </li>
-                            <li class="navbar-user-item navbar-user-item--separate navbar-user-item__logout">
-                                <a href="">Đăng xuất</a>
-                            </li>
-                        </ul>
+<!--                        <ul class="navbar-user-menu navbar-user-menu&#45;&#45;employee">-->
+<!--                            <li class="navbar-user-item">-->
+<!--                                <a href="#">Thống kê đơn hàng</a>-->
+<!--                            </li>-->
+<!--                            <li class="navbar-user-item">-->
+<!--                                <a href="#">Vẽ biểu đồ giá</a>-->
+<!--                            </li>-->
+<!--                            <li class="navbar-user-item navbar-user-item&#45;&#45;separate navbar-user-item__logout">-->
+<!--                                <a href="">Đăng xuất</a>-->
+<!--                            </li>-->
+<!--                        </ul>-->
                     </li>
                 </ul>
             </nav>
@@ -441,6 +441,6 @@
     </div>
 </div>
 
-<script th:src="@{/js/index.js}"></script>
+<script th:src="@{/js/home.js}"></script>
 </body>
 </html>

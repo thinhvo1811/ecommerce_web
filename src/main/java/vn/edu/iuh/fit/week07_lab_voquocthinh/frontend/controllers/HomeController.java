@@ -42,7 +42,7 @@ public class HomeController {
     ){
         Optional<User> user1 = userRepository.findById(user.getUsername());
         if (user1.isPresent()){
-            if(user1.get().getPassword().equals(user.getPassword())){
+            if(user1.get().getPassword().equals(user.getPassword()) && user1.get().getType().equals(UserType.CUSTOMER)){
                 session.setAttribute("customerSession",user1.get());
                 return "redirect:/home";
             }
