@@ -1,5 +1,6 @@
 package vn.edu.iuh.fit.week07_lab_voquocthinh.frontend.controllers;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -31,7 +32,8 @@ public class ProductController {
     public String showHomePage(
             Model model,
             @RequestParam("page") Optional<Integer> page,
-            @RequestParam("size") Optional<Integer> size
+            @RequestParam("size") Optional<Integer> size,
+            HttpSession session
     ){
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(10);
@@ -39,6 +41,8 @@ public class ProductController {
         List<Product> products = productService.findByStatusIsNotTerminatedNotPaging();
         Page<Product> productPage = productService.findByStatusIsNotTerminatedAndSortBySoldQuantity(currentPage - 1, pageSize);
         List<String> brands = productService.findAllManufacturerName();
+        User user = (User) session.getAttribute("customerSession");;
+        model.addAttribute("customerSession", user);
         Customer customer = new Customer();
         customer.setUser(new User());
         model.addAttribute("customer", customer);
@@ -62,7 +66,8 @@ public class ProductController {
     public String showHomePageSortByPriceAsc(
             Model model,
             @RequestParam("page") Optional<Integer> page,
-            @RequestParam("size") Optional<Integer> size
+            @RequestParam("size") Optional<Integer> size,
+            HttpSession session
     ){
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(10);
@@ -70,6 +75,8 @@ public class ProductController {
         List<Product> products = productService.findByStatusIsNotTerminatedNotPaging();
         Page<Product> productPage = productService.findByStatusIsNotTerminatedAndSortByPriceAsc(currentPage - 1, pageSize);
         List<String> brands = productService.findAllManufacturerName();
+        User user = (User) session.getAttribute("customerSession");;
+        model.addAttribute("customerSession", user);
         Customer customer = new Customer();
         customer.setUser(new User());
         model.addAttribute("customer", customer);
@@ -93,7 +100,8 @@ public class ProductController {
     public String showHomePageSortByPriceDesc(
             Model model,
             @RequestParam("page") Optional<Integer> page,
-            @RequestParam("size") Optional<Integer> size
+            @RequestParam("size") Optional<Integer> size,
+            HttpSession session
     ){
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(10);
@@ -101,6 +109,8 @@ public class ProductController {
         List<Product> products = productService.findByStatusIsNotTerminatedNotPaging();
         Page<Product> productPage = productService.findByStatusIsNotTerminatedAndSortByPriceDesc(currentPage - 1, pageSize);
         List<String> brands = productService.findAllManufacturerName();
+        User user = (User) session.getAttribute("customerSession");;
+        model.addAttribute("customerSession", user);
         Customer customer = new Customer();
         customer.setUser(new User());
         model.addAttribute("customer", customer);
@@ -125,7 +135,8 @@ public class ProductController {
             Model model,
             @RequestParam("page") Optional<Integer> page,
             @RequestParam("size") Optional<Integer> size,
-            @PathVariable("name") String name
+            @PathVariable("name") String name,
+            HttpSession session
     ){
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(10);
@@ -133,6 +144,8 @@ public class ProductController {
         List<Product> products = productService.findByStatusIsNotTerminatedNotPaging();
         Page<Product> productPage = productService.findByManufacturerAndStatusIsNotTerminatedAndSortBySoldQuantity(currentPage - 1, pageSize, name);
         List<String> brands = productService.findAllManufacturerName();
+        User user = (User) session.getAttribute("customerSession");;
+        model.addAttribute("customerSession", user);
         Customer customer = new Customer();
         customer.setUser(new User());
         model.addAttribute("customer", customer);
@@ -158,7 +171,8 @@ public class ProductController {
             Model model,
             @RequestParam("page") Optional<Integer> page,
             @RequestParam("size") Optional<Integer> size,
-            @PathVariable("name") String name
+            @PathVariable("name") String name,
+            HttpSession session
     ){
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(10);
@@ -166,6 +180,8 @@ public class ProductController {
         List<Product> products = productService.findByStatusIsNotTerminatedNotPaging();
         Page<Product> productPage = productService.findByManufacturerAndStatusIsNotTerminatedAndSortByPriceAsc(currentPage - 1, pageSize, name);
         List<String> brands = productService.findAllManufacturerName();
+        User user = (User) session.getAttribute("customerSession");;
+        model.addAttribute("customerSession", user);
         Customer customer = new Customer();
         customer.setUser(new User());
         model.addAttribute("customer", customer);
@@ -191,7 +207,8 @@ public class ProductController {
             Model model,
             @RequestParam("page") Optional<Integer> page,
             @RequestParam("size") Optional<Integer> size,
-            @PathVariable("name") String name
+            @PathVariable("name") String name,
+            HttpSession session
     ){
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(10);
@@ -199,6 +216,8 @@ public class ProductController {
         List<Product> products = productService.findByStatusIsNotTerminatedNotPaging();
         Page<Product> productPage = productService.findByManufacturerAndStatusIsNotTerminatedAndSortByPriceDesc(currentPage - 1, pageSize, name);
         List<String> brands = productService.findAllManufacturerName();
+        User user = (User) session.getAttribute("customerSession");;
+        model.addAttribute("customerSession", user);
         Customer customer = new Customer();
         customer.setUser(new User());
         model.addAttribute("customer", customer);
@@ -220,10 +239,13 @@ public class ProductController {
     }
 
     @GetMapping("/product-details/{id}")
-    public ModelAndView showProductDetail(@PathVariable("id") Long id){
+    public ModelAndView showProductDetail(@PathVariable("id") Long id,
+                                          HttpSession session){
         ModelAndView modelAndView = new ModelAndView();
         Product product = productService.findById(id);
         List<Product> products = productService.findByStatusIsNotTerminatedNotPaging();
+        User user = (User) session.getAttribute("customerSession");;
+        modelAndView.addObject("customerSession", user);
         Customer customer = new Customer();
         customer.setUser(new User());
         modelAndView.addObject("customer", customer);

@@ -44,16 +44,16 @@
                 </ul>
 
                 <ul class="navbar-list navbar-list__right">
-                    <li class="navbar-item navbar-item--strong navbar-item--separate navbar-item--register">Đăng Ký</li>
-                    <li class="navbar-item navbar-item--strong navbar-item--login">Đăng Nhập</li>
+                    <li th:class="'navbar-item navbar-item--strong navbar-item--separate navbar-item--register ' + ${customerSession!=null ? ' none' : ''}">Đăng Ký</li>
+                    <li th:class="'navbar-item navbar-item--strong navbar-item--login ' + ${customerSession!=null ? ' none' : ''}">Đăng Nhập</li>
 
-                    <li class="navbar-item navbar-user">
-                        <img src="https://scontent.fsgn5-2.fna.fbcdn.net/v/t1.6435-9/117354824_792500984821445_4185575291286150690_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=HEgLTVgd_LMAX-YGxN-&_nc_oc=AQl4xNJnSJXRxNzwzCU7zoGCF8fEjyNp8e46iTHtTP_XQ_xhdnB39irK9p2p7w_LAR7PP_OAdr6BuxGvjaztWagp&_nc_ht=scontent.fsgn5-2.fna&oh=00_AfAtBI1aq0bhPCtLkVecwKHMRkTwUSpMFwcwZr9thYcqCA&oe=653D18D3" alt="" class="navbar-user-avatar">
-                        <span class="navbar-user-name"></span>
+                    <li th:class="'navbar-item navbar-user ' + ${customerSession==null ? ' none' : ''}">
+                        <img src="https://scontent.fsgn5-2.fna.fbcdn.net/v/t1.6435-9/117354824_792500984821445_4185575291286150690_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=be3454&_nc_eui2=AeHFPE54Jnb_R-6bpEie8CjtHdy-X2qivg8d3L5faqK-D30oEww2QkjtdwkWUJX2tYPVrFfmWNQyGnC4H1eZZQUR&_nc_ohc=gQ5MZtDWGgYAX_RTM6f&_nc_oc=AQmpdZkWdUejwEVpJI3C9doO-bGuhU_927MQvrqI0GBn5aFo2n0BNlJC5mf8ZPUVdkhhQzOheux_-W6lxVAXKC8h&_nc_ht=scontent.fsgn5-2.fna&oh=00_AfDs74MiZMegTSaUawI2URnDmiT-dfTpIKXoi2gCrqYvyQ&oe=658BC253" alt=User class="navbar-user-avatar">
+                        <span class="navbar-user-name" th:text="${customerSession != null ? customerSession.username : ''}"></span>
 
-                        <ul class="navbar-user-menu navbar-user-menu--customer">
+                        <ul th:class="'navbar-user-menu navbar-user-menu--customer ' + ${customerSession != null ? (customerSession.type.name() == 'EMPLOYEE' ? ' none' : '') : ''}">
                             <li class="navbar-user-item">
-                                <a href="#">Tài khoản của tôi</a>
+                                <a th:if="${customerSession!=null}" th:href="@{/customer/my-account/{username}(username = ${customerSession.username})}">Tài khoản của tôi</a>
                             </li>
                             <li class="navbar-user-item">
                                 <a href="#">Đơn mua</a>
@@ -64,7 +64,7 @@
                         </ul>
 
 
-                        <ul class="navbar-user-menu navbar-user-menu--employee">
+                        <ul th:class="'navbar-user-menu navbar-user-menu--employee ' + ${customerSession != null ? (customerSession.type.name() == 'CUSTOMER' ? ' none' : '') : ''}">
                             <li class="navbar-user-item">
                                 <a href="#">Thống kê đơn hàng</a>
                             </li>
@@ -380,27 +380,27 @@
 
                 <form class="auth-form__form" th:object="${customer}" th:action="@{/register}" method="post">
                     <div class="auth-form__group form-group">
-                        <input type="text" class="auth-form__input" rules="required" name="register-username" placeholder="Tên đăng nhập" th:field="${user.username}">
+                        <input type="text" class="auth-form__input" required name="register-username" placeholder="Tên đăng nhập" th:field="${user.username}">
                         <span class="form-message"></span>
                     </div>
                     <div class="auth-form__group form-group">
-                        <input type="password" class="auth-form__input" rules="required|min:6" name="register-password" placeholder="Mật khẩu"  th:field="${user.password}">
+                        <input type="password" class="auth-form__input" required name="register-password" placeholder="Mật khẩu"  th:field="${user.password}">
                         <span class="form-message"></span>
                     </div>
                     <div class="auth-form__group form-group">
-                        <input type="text" class="auth-form__input" rules="required" name="register-name" placeholder="Tên của bạn"  th:field="*{name}">
+                        <input type="text" class="auth-form__input" required name="register-name" placeholder="Tên của bạn"  th:field="*{name}">
                         <span class="form-message"></span>
                     </div>
                     <div class="auth-form__group form-group">
-                        <input type="email" class="auth-form__input" rules="required|email" name="register-email" placeholder="Email của bạn"  th:field="*{email}">
+                        <input type="email" class="auth-form__input" required name="register-email" placeholder="Email của bạn"  th:field="*{email}">
                         <span class="form-message"></span>
                     </div>
                     <div class="auth-form__group form-group">
-                        <input type="text" class="auth-form__input" rules="required|phone" name="register-phone" placeholder="Số điện thoại của bạn"  th:field="*{phone}">
+                        <input type="text" class="auth-form__input" required name="register-phone" placeholder="Số điện thoại của bạn"  th:field="*{phone}">
                         <span class="form-message"></span>
                     </div>
                     <div class="auth-form__group form-group">
-                        <input type="text" class="auth-form__input" rules="required" name="register-address" placeholder="Địa chỉ của bạn"   th:field="*{address}">
+                        <input type="text" class="auth-form__input" required name="register-address" placeholder="Địa chỉ của bạn"   th:field="*{address}">
                         <span class="form-message"></span>
                     </div>
                     <div class="auth-form__controls">
@@ -422,11 +422,11 @@
 
                 <form class="auth-form__form" th:object="${user}" th:action="@{/login}" method="post">
                     <div class="auth-form__group form-group">
-                        <input type="text" class="auth-form__input" rules="required" name="login-username" placeholder="Tên đăng nhập"   th:field="*{username}">
+                        <input type="text" class="auth-form__input" required name="login-username" placeholder="Tên đăng nhập"   th:field="*{username}">
                         <span class="form-message"></span>
                     </div>
                     <div class="auth-form__group form-group">
-                        <input type="password" class="auth-form__input" rules="required|min:6" name="login-password" placeholder="Mật khẩu"   th:field="*{password}">
+                        <input type="password" class="auth-form__input" required name="login-password" placeholder="Mật khẩu"   th:field="*{password}">
                         <span class="form-message"></span>
                     </div>
 

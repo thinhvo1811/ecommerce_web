@@ -44,32 +44,16 @@
                 </ul>
 
                 <ul class="navbar-list navbar-list__right">
-                    <li th:class="'navbar-item navbar-item--strong navbar-item--separate navbar-item--register ' + ${customerSession!=null ? ' none' : ''}">Đăng Ký</li>
-                    <li th:class="'navbar-item navbar-item--strong navbar-item--login ' + ${customerSession!=null ? ' none' : ''}">Đăng Nhập</li>
-
-                    <li th:class="'navbar-item navbar-user ' + ${customerSession==null ? ' none' : ''}">
+                    <li class="navbar-item navbar-user">
                         <img src="https://scontent.fsgn5-2.fna.fbcdn.net/v/t1.6435-9/117354824_792500984821445_4185575291286150690_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=be3454&_nc_eui2=AeHFPE54Jnb_R-6bpEie8CjtHdy-X2qivg8d3L5faqK-D30oEww2QkjtdwkWUJX2tYPVrFfmWNQyGnC4H1eZZQUR&_nc_ohc=gQ5MZtDWGgYAX_RTM6f&_nc_oc=AQmpdZkWdUejwEVpJI3C9doO-bGuhU_927MQvrqI0GBn5aFo2n0BNlJC5mf8ZPUVdkhhQzOheux_-W6lxVAXKC8h&_nc_ht=scontent.fsgn5-2.fna&oh=00_AfDs74MiZMegTSaUawI2URnDmiT-dfTpIKXoi2gCrqYvyQ&oe=658BC253" alt=User class="navbar-user-avatar">
-                        <span class="navbar-user-name" th:text="${customerSession != null ? customerSession.username : ''}"></span>
+                        <span class="navbar-user-name" th:text="${customerSession.username}"></span>
 
-                        <ul th:class="'navbar-user-menu navbar-user-menu--customer ' + ${customerSession != null ? (customerSession.type.name() == 'EMPLOYEE' ? ' none' : '') : ''}">
+                        <ul class="navbar-user-menu navbar-user-menu--customer">
                             <li class="navbar-user-item">
-                                <a th:if="${customerSession!=null}" th:href="@{/customer/my-account/{username}(username = ${customerSession.username})}">Tài khoản của tôi</a>
+                                <a th:href="@{/customer/my-account/{username}(username = ${customerSession.username})}">Tài khoản của tôi</a>
                             </li>
                             <li class="navbar-user-item">
                                 <a href="#">Đơn mua</a>
-                            </li>
-                            <li class="navbar-user-item navbar-user-item--separate navbar-user-item__logout">
-                                <a href="">Đăng xuất</a>
-                            </li>
-                        </ul>
-
-
-                        <ul th:class="'navbar-user-menu navbar-user-menu--employee ' + ${customerSession != null ? (customerSession.type.name() == 'CUSTOMER' ? ' none' : '') : ''}">
-                            <li class="navbar-user-item">
-                                <a href="#">Thống kê đơn hàng</a>
-                            </li>
-                            <li class="navbar-user-item">
-                                <a href="#">Vẽ biểu đồ giá</a>
                             </li>
                             <li class="navbar-user-item navbar-user-item--separate navbar-user-item__logout">
                                 <a href="">Đăng xuất</a>
@@ -150,42 +134,42 @@
     <div class="app__container">
         <div class="grid wide">
             <div class="row sm-gutter app__content">
-                <div class="col l-12 m-12 c-12">
-                    <div class="product-detail">
-                        <div class="row sm-gutter">
-                            <div class="col l-5 m-5 c-5">
-                                <div class="product-detail__img">
-                                    <div class="product-detail__img-main" th:style="'background-image:url('+ ${product.productImageList[0].path} +');'">
+                <div class="col l-3 m-0 c-0">
+                </div>
 
-                                    </div>
-                                    <div class="product-detail__img-list">
-                                        <ul class="product-detail__img-list--list">
-                                            <li th:each="img: ${product.productImageList}" class="product-detail__img-list--item" th:style="'background-image:url('+ ${img.path} +');'"></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col l-7 m-7 c-7">
-                                <div class="product-detail__info">
-                                    <div class="product-detail__info-header">
-                                        <div class="product-detail__info-name" th:text="${product.name}"></div>
-                                        <div class="product-detail__info-sold-quantity" th:text="${product.getSoldQuantity()} + ' đã bán'"></div>
-                                        <div class="product-detail__info-price" th:text="${#numbers.formatDecimal(product.productPrices[product.productPrices.size()-1].price, 0, 'COMMA', 0, 'POINT')} + 'đ '"></div>
-                                    </div>
-                                    <div class="product-detail__info-footer">
-                                        <div class="product-detail__info-quantity">
-                                            <span class="product-detail__info-quantity-label">Số lượng:</span>
-                                            <input type="number" class="product-detail__info-quantity-input" value="1"></input>
-                                        </div>
-                                        <div class="product-detail__info-btn">
-                                            <div class="product-detail__info-btn--add-cart btn">Thêm vào giỏ hàng</div>
-                                            <div class="product-detail__info-btn--buy btn btn--primary">Mua hàng</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="col l-6 m-12 c-12">
+                    <div class="auth-form__container auth-form--update">
+                        <div class="auth-form__header auth-form__header--update">
+                            <h3 class="auth-form__heading">Thông tin tài khoản</h3>
                         </div>
+
+                        <form class="auth-form__form" th:object="${customer}" th:action="@{/customer/update/{id}(id = ${customer.id})}" method="post">
+                            <div class="auth-form__group form-group">
+                                <span class="auth-form__label">Name:</span>
+                                <input type="text" class="auth-form__input" name="user-name" required placeholder="Tên của bạn" th:field="*{name}">
+                            </div>
+                            <div class="auth-form__group form-group">
+                                <span class="auth-form__label">Email:</span>
+                                <input type="email" class="auth-form__input" name="user-email" required placeholder="Email của bạn" th:field="*{email}">
+                            </div>
+                            <div class="auth-form__group form-group">
+                                <span class="auth-form__label">Phone:</span>
+                                <input type="text" class="auth-form__input" name="user-phone" required placeholder="Số điện thoại của bạn" th:field="*{phone}">
+                            </div>
+                            <div class="auth-form__group form-group">
+                                <span class="auth-form__label">Address:</span>
+                                <input type="text" class="auth-form__input" name="user-address" required placeholder="Địa chỉ của bạn" th:field="*{address}">
+                            </div>
+                            <div class="auth-form__controls">
+                                <button type="submit" class="btn btn--primary btn--update-customer">CẬP NHẬT</button>
+                            </div>
+                        </form>
+
+
                     </div>
+                </div>
+                <div class="col l-3 m-0 c-0">
+
                 </div>
             </div>
         </div>
@@ -285,82 +269,6 @@
     </footer>
 </div>
 
-<!-- Modal layout  -->
-<div class="modal">
-    <div class="modal__overlay"></div>
-
-    <div class="modal__body">
-        <!-- Register form -->
-        <div class="auth-form auth-form--register">
-            <div class="auth-form__container">
-                <div class="auth-form__header">
-                    <h3 class="auth-form__heading">Đăng ký</h3>
-                    <span class="auth-form__switch-btn">Đăng nhập</span>
-                </div>
-
-                <form class="auth-form__form" th:object="${customer}" th:action="@{/register}" method="post">
-                    <div class="auth-form__group form-group">
-                        <input type="text" class="auth-form__input" required name="register-username" placeholder="Tên đăng nhập" th:field="${user.username}">
-                        <span class="form-message"></span>
-                    </div>
-                    <div class="auth-form__group form-group">
-                        <input type="password" class="auth-form__input" required name="register-password" placeholder="Mật khẩu"  th:field="${user.password}">
-                        <span class="form-message"></span>
-                    </div>
-                    <div class="auth-form__group form-group">
-                        <input type="text" class="auth-form__input" required name="register-name" placeholder="Tên của bạn"  th:field="*{name}">
-                        <span class="form-message"></span>
-                    </div>
-                    <div class="auth-form__group form-group">
-                        <input type="email" class="auth-form__input" required name="register-email" placeholder="Email của bạn"  th:field="*{email}">
-                        <span class="form-message"></span>
-                    </div>
-                    <div class="auth-form__group form-group">
-                        <input type="text" class="auth-form__input" required name="register-phone" placeholder="Số điện thoại của bạn"  th:field="*{phone}">
-                        <span class="form-message"></span>
-                    </div>
-                    <div class="auth-form__group form-group">
-                        <input type="text" class="auth-form__input" required name="register-address" placeholder="Địa chỉ của bạn"   th:field="*{address}">
-                        <span class="form-message"></span>
-                    </div>
-                    <div class="auth-form__controls">
-                        <button class="btn auth-form__controls-back btn--normal">TRỞ LẠI</button>
-                        <button type="submit" class="btn btn--primary btn--register">ĐĂNG KÝ</button>
-                    </div>
-                </form>
-
-            </div>
-        </div>
-
-        <!-- Login form -->
-        <div class="auth-form auth-form--login">
-            <div class="auth-form__container auth-form--update">
-                <div class="auth-form__header">
-                    <h3 class="auth-form__heading">Đăng nhập</h3>
-                    <span class="auth-form__switch-btn">Đăng ký</span>
-                </div>
-
-                <form class="auth-form__form" th:object="${user}" th:action="@{/login}" method="post">
-                    <div class="auth-form__group form-group">
-                        <input type="text" class="auth-form__input" required name="login-username" placeholder="Tên đăng nhập"   th:field="*{username}">
-                        <span class="form-message"></span>
-                    </div>
-                    <div class="auth-form__group form-group">
-                        <input type="password" class="auth-form__input" required name="login-password" placeholder="Mật khẩu"   th:field="*{password}">
-                        <span class="form-message"></span>
-                    </div>
-
-                    <div class="auth-form__controls">
-                        <button class="btn auth-form__controls-back btn--normal">TRỞ LẠI</button>
-                        <button type="submit" class="btn btn--primary btn--login btn--login-customer">ĐĂNG NHẬP</button>
-                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<script th:src="@{/js/product-details.js}"></script>
+<script th:src="@{/js/customer-info.js}"></script>
 </body>
 </html>

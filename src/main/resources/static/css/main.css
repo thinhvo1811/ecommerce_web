@@ -79,15 +79,14 @@
 }
 
 .navbar-item.navbar-user{
-    display: none;
     justify-items: center;
     align-items: center;
     position: relative;
 }
 
-/* .navbar-user:hover .navbar-user-menu--employee{
+.navbar-user:hover .navbar-user-menu{
     display: block;
-} */
+}
 
 .navbar-user-avatar{
     width: 22px;

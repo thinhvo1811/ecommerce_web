@@ -200,3 +200,7 @@ html{
 .hidden{
     visibility: hidden;
 }
+
+.none{
+    display: none !important;
+}
