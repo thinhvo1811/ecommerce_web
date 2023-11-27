@@ -77,6 +77,14 @@ public class Order {
         this.orderDetails = orderDetails;
     }
 
+    public double getTotal(){
+        double total = 0;
+        for (OrderDetail orderDetail : orderDetails){
+            total += orderDetail.getPrice();
+        }
+        return total;
+    }
+
     @Override
     public String toString() {
         return "Order{" +

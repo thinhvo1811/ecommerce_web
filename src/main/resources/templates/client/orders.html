@@ -50,10 +50,10 @@
 
                         <ul class="navbar-user-menu navbar-user-menu--customer">
                             <li class="navbar-user-item">
-                                <a href="#">Tài khoản của tôi</a>
+                                <a th:href="@{/customer/my-account}">Tài khoản của tôi</a>
                             </li>
                             <li class="navbar-user-item">
-                                <a th:href="@{/customer/my-order}">Đơn mua</a>
+                                <a href="#">Đơn mua</a>
                             </li>
                             <li class="navbar-user-item navbar-user-item--separate navbar-user-item__logout">
                                 <a href="">Đăng xuất</a>
@@ -134,42 +134,31 @@
     <div class="app__container">
         <div class="grid wide">
             <div class="row sm-gutter app__content">
-                <div class="col l-3 m-0 c-0">
+                <div class="col l-1 m-0 c-0">
                 </div>
 
-                <div class="col l-6 m-12 c-12">
-                    <div class="auth-form__container auth-form--update">
-                        <div class="auth-form__header auth-form__header--update">
-                            <h3 class="auth-form__heading">Thông tin tài khoản</h3>
+                <div class="col l-10 m-12 c-12">
+                    <div class="order-list">
+                        <div th:each="order : ${orders}" class="row">
+                            <ul class="order">
+                                <div class="order-head">Đơn hàng: <span class="order-id" th:text="${order.order_id}"></span></div>
+                                    <li th:each="orderDetail : ${order.orderDetails}" class="order-detail">
+                                        <div class="order-detail__product-img" th:style="'background-image:url('+ *{orderDetail.product.productImageList[0].path} +');'"></div>
+                                        <div class="order-detail__product-info">
+                                            <div class="order-detail__product-name" th:text="${orderDetail.product.name}"></div>
+                                            <div class="order-detail__product-detail">
+                                                <div class="order-detail__product-quantity" th:text="'x' + ${orderDetail.quantity}"></div>
+                                                <div class="order-detail__product-price" th:text="${#numbers.formatDecimal(orderDetail.price, 0, 'COMMA', 0, 'POINT')} + 'đ '"></div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                <div class="order-price">Tổng tiền: <span class="order-total" th:text="${#numbers.formatDecimal(order.getTotal(), 0, 'COMMA', 0, 'POINT')} + 'đ '"></span></div>
+                            </ul>
                         </div>
-
-                        <form class="auth-form__form" th:object="${customer}" th:action="@{/customer/update/{id}(id = ${customer.id})}" method="post">
-                            <div class="auth-form__group form-group">
-                                <span class="auth-form__label">Name:</span>
-                                <input type="text" class="auth-form__input" name="user-name" required placeholder="Tên của bạn" th:field="*{name}">
-                            </div>
-                            <div class="auth-form__group form-group">
-                                <span class="auth-form__label">Email:</span>
-                                <input type="email" class="auth-form__input" name="user-email" required placeholder="Email của bạn" th:field="*{email}">
-                            </div>
-                            <div class="auth-form__group form-group">
-                                <span class="auth-form__label">Phone:</span>
-                                <input type="text" class="auth-form__input" name="user-phone" required placeholder="Số điện thoại của bạn" th:field="*{phone}">
-                            </div>
-                            <div class="auth-form__group form-group">
-                                <span class="auth-form__label">Address:</span>
-                                <input type="text" class="auth-form__input" name="user-address" required placeholder="Địa chỉ của bạn" th:field="*{address}">
-                            </div>
-                            <div class="auth-form__controls">
-                                <button type="submit" class="btn btn--primary btn--update-customer">CẬP NHẬT</button>
-                            </div>
-                        </form>
-
-
                     </div>
                 </div>
-                <div class="col l-3 m-0 c-0">
 
+                <div class="col l-1 m-0 c-0">
                 </div>
             </div>
         </div>

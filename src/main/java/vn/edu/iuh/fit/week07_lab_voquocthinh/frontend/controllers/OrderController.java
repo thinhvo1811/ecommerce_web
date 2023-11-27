@@ -4,54 +4,42 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.Customer;
+import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.Order;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.Product;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.User;
-import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.repositories.CustomerRepository;
+import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.repositories.OrderRepository;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.services.CustomerService;
+import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.services.OrderService;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.services.ProductService;
 
 import java.util.List;
 
 @Controller
-public class CustomerController {
+public class OrderController {
     @Autowired
-    private CustomerRepository customerRepository;
+    private OrderRepository orderRepository;
+    @Autowired
+    private OrderService orderService;
     @Autowired
     private CustomerService customerService;
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/customer/my-account")
-    public ModelAndView showMyAccount(
-                                      HttpSession session){
+    @GetMapping("/customer/my-order")
+    public ModelAndView showMyOrder(
+            HttpSession session){
         ModelAndView modelAndView = new ModelAndView();
         User user = (User) session.getAttribute("customerSession");;
         modelAndView.addObject("customerSession", user);
         Customer customer = customerService.findByUserUsername(user.getUsername());
+        List<Order> orders = orderService.findByCustomer(customer);
         List<Product> products = productService.findByStatusIsNotTerminatedNotPaging();
         modelAndView.addObject("products", products);
-        modelAndView.addObject("customer", customer);
+        modelAndView.addObject("orders", orders);
 
-        modelAndView.setViewName("client/customer-info");
-        return modelAndView;
-    }
-
-    @PostMapping("/customer/update/{id}")
-    public ModelAndView update(@PathVariable("id") Long id,
-                                      @ModelAttribute("customer") Customer customer){
-        ModelAndView modelAndView = new ModelAndView();
-        Customer customer1 = customerRepository.findById(id).get();
-        customer1.setName(customer.getName());
-        customer1.setEmail(customer.getEmail());
-        customer1.setPhone(customer.getPhone());
-        customer1.setAddress(customer.getAddress());
-        customerRepository.save(customer1);
-        modelAndView.setViewName("redirect:/customer/my-account");
+        modelAndView.setViewName("client/orders");
         return modelAndView;
     }
 }

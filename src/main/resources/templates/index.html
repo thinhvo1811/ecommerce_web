@@ -53,10 +53,10 @@
 
                         <ul th:class="'navbar-user-menu navbar-user-menu--customer ' + ${customerSession != null ? (customerSession.type.name() == 'EMPLOYEE' ? ' none' : '') : ''}">
                             <li class="navbar-user-item">
-                                <a th:if="${customerSession!=null}" th:href="@{/customer/my-account/{username}(username = ${customerSession.username})}">Tài khoản của tôi</a>
+                                <a th:href="@{/customer/my-account}">Tài khoản của tôi</a>
                             </li>
                             <li class="navbar-user-item">
-                                <a href="#">Đơn mua</a>
+                                <a th:href="@{/customer/my-order}">Đơn mua</a>
                             </li>
                             <li class="navbar-user-item navbar-user-item--separate navbar-user-item__logout">
                                 <a href="">Đăng xuất</a>
