@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.enums.UserType;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.Customer;
+import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.Employee;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.User;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.repositories.CustomerRepository;
+import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.repositories.EmployeeRepository;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.repositories.UserRepository;
+import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.services.EmployeeService;
 
 import java.util.Optional;
 
@@ -22,6 +25,8 @@ public class HomeController {
     private CustomerRepository customerRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private EmployeeService employeeService;
 
     @PostMapping("/register")
     public String register(
@@ -77,7 +82,7 @@ public class HomeController {
                              HttpSession session) {
         Optional<User> user1 = userRepository.findById(user.getUsername());
         if (user1.isPresent()){
-            if(user1.get().getPassword().equals(user.getPassword()) && user1.get().getType().equals(UserType.EMPLOYEE)){
+            if(user1.get().getPassword().equals(user.getPassword()) && user1.get().getType().equals(UserType.EMPLOYEE) && employeeService.findByUserUsernameAndStatusIsNotTerminated(user.getUsername())!=null){
                 session.setAttribute("adminSession",user1.get());
                 return "redirect:/admin/my-account";
             }

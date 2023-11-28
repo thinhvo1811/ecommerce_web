@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopee</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link rel="stylesheet" th:href="@{/css/base.css}">
     <link rel="stylesheet" th:href="@{/css/main.css}">
@@ -22,20 +25,20 @@
                         <img src="https://scontent.fsgn5-2.fna.fbcdn.net/v/t1.6435-9/117354824_792500984821445_4185575291286150690_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=be3454&_nc_eui2=AeHFPE54Jnb_R-6bpEie8CjtHdy-X2qivg8d3L5faqK-D30oEww2QkjtdwkWUJX2tYPVrFfmWNQyGnC4H1eZZQUR&_nc_ohc=gQ5MZtDWGgYAX_RTM6f&_nc_oc=AQmpdZkWdUejwEVpJI3C9doO-bGuhU_927MQvrqI0GBn5aFo2n0BNlJC5mf8ZPUVdkhhQzOheux_-W6lxVAXKC8h&_nc_ht=scontent.fsgn5-2.fna&oh=00_AfDs74MiZMegTSaUawI2URnDmiT-dfTpIKXoi2gCrqYvyQ&oe=658BC253" alt=User class="navbar-user-avatar">
                         <span class="navbar-user-name" th:text="${adminSession.username}"></span>
 
-                            <ul class="navbar-user-menu navbar-user-menu--employee">
-                                <li class="navbar-user-item">
-                                    <a href="#">Tài khoản của tôi</a>
-                                </li>
-                                <li class="navbar-user-item">
-                                    <a th:href="@{/admin/order-statistics}">Thống kê đơn hàng</a>
-                                </li>
-                                <li class="navbar-user-item">
-                                    <a href="#">Vẽ biểu đồ giá</a>
-                                </li>
-                                <li class="navbar-user-item navbar-user-item--separate navbar-user-item__logout">
-                                    <a th:href="@{/admin/logout}">Đăng xuất</a>
-                                </li>
-                            </ul>
+                        <ul class="navbar-user-menu navbar-user-menu--employee">
+                            <li class="navbar-user-item">
+                                <a href="#">Tài khoản của tôi</a>
+                            </li>
+                            <li class="navbar-user-item">
+                                <a href="#">Thống kê đơn hàng</a>
+                            </li>
+                            <li class="navbar-user-item">
+                                <a href="#">Vẽ biểu đồ giá</a>
+                            </li>
+                            <li class="navbar-user-item navbar-user-item--separate navbar-user-item__logout">
+                                <a th:href="@{/admin/logout}">Đăng xuất</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </nav>
@@ -45,41 +48,47 @@
     <div class="app__container">
         <div class="grid wide">
             <div class="row sm-gutter app__content">
-                <div class="col l-3 m-0 c-0">
-                </div>
+                <div class="col l-12 m-12 c-12">
+                    <div class="order-statictis hide-on-mobile-tablet">
+                        <span class="order-statictis__label">Thống kê</span>
 
-                <div class="col l-6 m-12 c-12">
-                    <div class="auth-form__container auth-form--update">
-                        <div class="auth-form__header auth-form__header--update">
-                            <h3 class="auth-form__heading">Thông tin tài khoản</h3>
+                        <div class="select-input">
+                            <span class="select-input__label">Đơn hàng</span>
+                            <i class="select-input__icon fas fa-angle-down"></i>
+
+                            <!-- List options -->
+                            <ul class="select-input__list">
+                                <li class="select-input__item">
+                                    <a href="" class="select-input__link order-statictis__by-date">Theo ngày</a>
+                                </li>
+                                <li class="select-input__item">
+                                    <a href="" class="select-input__link order-statictis__by-period">Theo khoảng thời gian</a>
+                                </li>
+                                <li class="select-input__item">
+                                    <a href="" class="select-input__link order-statictis__by-employee-and-period">Theo nhân viên</a>
+                                </li>
+                            </ul>
                         </div>
+                        <div class="order-statictis__select-employee">
+                            <label for="employee">Chọn nhân viên:</label>
+                            <select name="employee" id="employee" class="order-statictis__employee-list">
+                                <option th:each="employee : ${employees}" th:value="${employee.id}" th:text="${employee.fullname}"></option>
+                            </select>
+                        </div>
+                        <div class="order-statictis__select-fromdate">
+                            <label for="fromdate" class="fromdate-label">Từ ngày:</label>
+                            <input type="date" id="fromdate" name="fromdate" class="order-statictis__fromdate-input">
+                        </div>
+                        <div class="order-statictis__select-todate">
+                            <label for="todate">Đến ngày:</label>
+                            <input type="date" id="todate" name="todate" class="order-statictis__todate-input">
+                        </div>
+                        <button class="statistic__btn btn btn--primary">Thống kê</button>
+                    </div>
 
-                        <form class="auth-form__form" th:object="${employee}" th:action="@{/admin/update/{id}(id = ${employee.id})}" method="post">
-                            <div class="auth-form__group form-group">
-                                <span class="auth-form__label">Name:</span>
-                                <input type="text" class="auth-form__input" name="user-name" required placeholder="Tên của bạn" th:field="*{fullname}">
-                            </div>
-                            <div class="auth-form__group form-group">
-                                <span class="auth-form__label">Email:</span>
-                                <input type="email" class="auth-form__input" name="user-email" required placeholder="Email của bạn" th:field="*{email}">
-                            </div>
-                            <div class="auth-form__group form-group">
-                                <span class="auth-form__label">Phone:</span>
-                                <input type="text" class="auth-form__input" name="user-phone" required placeholder="Số điện thoại của bạn" th:field="*{phone}">
-                            </div>
-                            <div class="auth-form__group form-group">
-                                <span class="auth-form__label">Address:</span>
-                                <input type="text" class="auth-form__input" name="user-address" required placeholder="Địa chỉ của bạn" th:field="*{address}">
-                            </div>
-                            <div class="auth-form__controls">
-                                <button type="submit" class="btn btn--primary btn--update-customer">CẬP NHẬT</button>
-                            </div>
-                        </form>
-
+                    <div class="order-statictis__order-list">
 
                     </div>
-                </div>
-                <div class="col l-3 m-0 c-0">
 
                 </div>
             </div>
@@ -179,5 +188,6 @@
         </div>
     </footer>
 </div>
+<script th:src="@{/js/order-statistics.js}"></script>
 </body>
 </html>

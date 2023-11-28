@@ -30,7 +30,7 @@ public class EmployeeController {
         ModelAndView modelAndView = new ModelAndView();
         User user = (User) session.getAttribute("adminSession");
         modelAndView.addObject("adminSession", user);
-        Employee employee = employeeService.findByUserUsername(user.getUsername());
+        Employee employee = employeeService.findByUserUsernameAndStatusIsNotTerminated(user.getUsername());
         modelAndView.addObject("employee", employee);
 
         modelAndView.setViewName("admin/admin-info");
