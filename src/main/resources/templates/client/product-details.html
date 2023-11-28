@@ -166,7 +166,7 @@
                                         </div>
                                         <div class="product-detail__info-btn">
                                             <div class="product-detail__info-btn--add-cart btn">Thêm vào giỏ hàng</div>
-                                            <div class="product-detail__info-btn--buy btn btn--primary">Mua hàng</div>
+                                            <div th:if="${product.status.name() == 'ACTIVE'}" class="product-detail__info-btn--buy btn btn--primary">Mua hàng</div>
                                         </div>
                                     </div>
                                 </div>
