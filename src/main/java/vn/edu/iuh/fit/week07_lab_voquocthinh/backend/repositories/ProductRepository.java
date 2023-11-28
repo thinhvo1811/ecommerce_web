@@ -15,4 +15,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT distinct p.manufacturer FROM Product p")
     List<String> findAllManufacturerName();
     List<Product> findByManufacturerAndStatusIsNot(String manufacturerName,ProductStatus status);
+    @Query("SELECT p FROM Product p WHERE p.product_id = :id and p.status != :status")
+    Product findByProduct_idAndStatusIsNot(@Param("id") long id, @Param("status") ProductStatus status);
 }

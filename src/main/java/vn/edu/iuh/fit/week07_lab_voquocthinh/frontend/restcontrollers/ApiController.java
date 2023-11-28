@@ -27,20 +27,26 @@ public class ApiController {
     }
 
     @GetMapping("/orders-by-date")
-    public List<Order> getProductsByDate(@RequestParam("date") String date){
+    public List<Order> getOrdersByDate(@RequestParam("date") String date){
         List<Order> orders = orderService.findByOrderDate(date);
         return orders;
     }
 
     @GetMapping("/orders-by-period")
-    public List<Order> getProductsByPeriod(@RequestParam("fromDate") String fromDate,@RequestParam("toDate") String toDate){
+    public List<Order> getOrdersByPeriod(@RequestParam("fromDate") String fromDate,@RequestParam("toDate") String toDate){
         List<Order> orders = orderService.findByOrderDateBetween(fromDate,toDate);
         return orders;
     }
 
     @GetMapping("/orders-employee-and-by-period")
-    public List<Order> getProductsByEmployeeIdPeriod(@RequestParam("empId") long id, @RequestParam("fromDate") String fromDate,@RequestParam("toDate") String toDate){
+    public List<Order> getOrdersByEmployeeIdPeriod(@RequestParam("empId") long id, @RequestParam("fromDate") String fromDate,@RequestParam("toDate") String toDate){
         List<Order> orders = orderService.findByEmployeeIdAndOrderDateBetween(id, fromDate,toDate);
         return orders;
+    }
+
+    @GetMapping("/products/{id}")
+    public Product getProductByIdAndNotTerminated(@PathVariable("id") long id){
+        Product product = productService.findByIdAndIsNotTerminated(id);
+        return product;
     }
 }

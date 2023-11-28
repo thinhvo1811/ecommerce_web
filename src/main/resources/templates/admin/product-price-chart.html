@@ -14,6 +14,7 @@
     <link rel="stylesheet" th:href="@{/css/responsive.css}">
     <link th:href="@{/assets/fonts/fontawesome-free-6.4.0-web/css/all.min.css}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://code.highcharts.com/highcharts.js"></script>
 </head>
 <body>
 <div class="app">
@@ -30,10 +31,10 @@
                                 <a th:href="@{/admin/my-account}">Tài khoản của tôi</a>
                             </li>
                             <li class="navbar-user-item">
-                                <a href="#">Thống kê đơn hàng</a>
+                                <a th:href="@{/admin/order-statistics}">Thống kê đơn hàng</a>
                             </li>
                             <li class="navbar-user-item">
-                                <a th:href="@{/admin/product-price-chart}">Vẽ biểu đồ giá</a>
+                                <a href="#">Vẽ biểu đồ giá</a>
                             </li>
                             <li class="navbar-user-item navbar-user-item--separate navbar-user-item__logout">
                                 <a th:href="@{/admin/logout}">Đăng xuất</a>
@@ -49,47 +50,19 @@
         <div class="grid wide">
             <div class="row sm-gutter app__content">
                 <div class="col l-12 m-12 c-12">
-                    <div class="order-statictis hide-on-mobile-tablet">
-                        <span class="order-statictis__label">Thống kê</span>
-
-                        <div class="select-input">
-                            <span class="select-input__label">Đơn hàng</span>
-                            <i class="select-input__icon fas fa-angle-down"></i>
-
-                            <!-- List options -->
-                            <ul class="select-input__list">
-                                <li class="select-input__item">
-                                    <a href="" class="select-input__link order-statictis__by-date">Theo ngày</a>
-                                </li>
-                                <li class="select-input__item">
-                                    <a href="" class="select-input__link order-statictis__by-period">Theo khoảng thời gian</a>
-                                </li>
-                                <li class="select-input__item">
-                                    <a href="" class="select-input__link order-statictis__by-employee-and-period">Theo nhân viên</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="order-statictis__select-employee">
-                            <label for="employee">Chọn nhân viên:</label>
-                            <select name="employee" id="employee" class="order-statictis__employee-list">
-                                <option th:each="employee : ${employees}" th:value="${employee.id}" th:text="${employee.fullname}"></option>
+                    <div class="product-chart hide-on-mobile-tablet">
+                        <div class="product-chart__select-product">
+                            <label for="product">Chọn sản phẩm:</label>
+                            <select name="product" id="product" class="product-chart__product-list">
+                                <option th:each="product : ${products}" th:value="${product.product_id}" th:text="${product.name}"></option>
                             </select>
                         </div>
-                        <div class="order-statictis__select-fromdate">
-                            <label for="fromdate" class="fromdate-label">Từ ngày:</label>
-                            <input type="date" id="fromdate" name="fromdate" class="order-statictis__fromdate-input">
-                        </div>
-                        <div class="order-statictis__select-todate">
-                            <label for="todate">Đến ngày:</label>
-                            <input type="date" id="todate" name="todate" class="order-statictis__todate-input">
-                        </div>
-                        <button class="statistic__btn btn btn--primary">Thống kê</button>
+                        <button class="product-chart__btn btn btn--primary">Vẽ biểu đồ</button>
                     </div>
 
-                    <div class="order-statictis__order-list">
+                    <div id="product-chart__chart">
 
                     </div>
-
                 </div>
             </div>
         </div>
@@ -188,6 +161,6 @@
         </div>
     </footer>
 </div>
-<script th:src="@{/js/order-statistics.js}"></script>
+<script th:src="@{/js/product-price-chart.js}"></script>
 </body>
 </html>

@@ -256,4 +256,16 @@ public class ProductService {
 
         return product;
     }
+
+    public Product findByIdAndIsNotTerminated(long id){
+        Product product =  productRepository.findByProduct_idAndStatusIsNot(id, ProductStatus.TERMINATED);
+        List<ProductPrice> productPrices = product.getProductPrices();
+        Collections.sort(productPrices, new Comparator<ProductPrice>() {
+            @Override
+            public int compare(ProductPrice o1, ProductPrice o2) {
+                return o1.getPrice_date_time().compareTo(o2.getPrice_date_time());
+            }
+        });
+        return product;
+    }
 }

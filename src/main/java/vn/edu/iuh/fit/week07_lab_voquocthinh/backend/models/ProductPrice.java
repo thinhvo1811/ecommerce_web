@@ -1,5 +1,6 @@
 package vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
@@ -17,6 +18,7 @@ public class ProductPrice {
     @JsonIgnore
     private Product product;
     @Column(name = "price_date_time")
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime price_date_time;
     @Column(name = "price", nullable = false)
     private double price;

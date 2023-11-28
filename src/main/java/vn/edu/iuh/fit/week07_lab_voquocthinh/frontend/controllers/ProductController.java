@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.enums.EmployeeStatus;
+import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.enums.ProductStatus;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.Customer;
+import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.Employee;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.Product;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.User;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.repositories.ProductRepository;
@@ -252,6 +255,18 @@ public class ProductController {
         modelAndView.addObject("product", product);
         modelAndView.addObject("products", products);
         modelAndView.setViewName("client/product-details");
+        return modelAndView;
+    }
+
+    @GetMapping("/admin/product-price-chart")
+    public ModelAndView showProductPriceChart(
+            HttpSession session){
+        ModelAndView modelAndView = new ModelAndView();
+        User user = (User) session.getAttribute("adminSession");
+        modelAndView.addObject("adminSession", user);
+        List<Product> products = productRepository.findByStatusIsNot(ProductStatus.TERMINATED);
+        modelAndView.addObject("products", products);
+        modelAndView.setViewName("admin/product-price-chart");
         return modelAndView;
     }
 }
