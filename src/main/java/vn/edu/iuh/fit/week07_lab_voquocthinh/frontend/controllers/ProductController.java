@@ -5,19 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.enums.EmployeeStatus;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.enums.ProductStatus;
-import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.Customer;
-import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.Employee;
-import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.Product;
-import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.User;
+import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.*;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.repositories.ProductRepository;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.services.ProductService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -313,6 +309,73 @@ public class ProductController {
         modelAndView.addObject("adminSession", user);
         modelAndView.addObject("product", product);
         modelAndView.setViewName("admin/product-details-for-admin");
+        return modelAndView;
+    }
+
+    @GetMapping("/admin/show-form-add-product")
+    public ModelAndView showFormAddProduct(HttpSession session){
+        ModelAndView modelAndView = new ModelAndView();
+        Product product = new Product();
+        ProductPrice productPrice = new ProductPrice();
+        User user = (User) session.getAttribute("adminSession");
+        modelAndView.addObject("adminSession", user);
+        modelAndView.addObject("product", product);
+        modelAndView.addObject("productPrice", productPrice);
+        modelAndView.setViewName("admin/add-product-form");
+        return modelAndView;
+    }
+
+    @PostMapping("/admin/add-product")
+    public ModelAndView addProduct(HttpSession session,
+                                   @ModelAttribute("product") Product product,
+                                   @ModelAttribute("productPrice") ProductPrice productPrice){
+        ModelAndView modelAndView = new ModelAndView();
+        product.setStatus(ProductStatus.ACTIVE);
+        productPrice.setPrice_date_time(LocalDateTime.now());
+        productPrice.setProduct(product);
+        List<ProductPrice> productPrices = List.of(productPrice);
+        product.setProductPrices(productPrices);
+        productRepository.save(product);
+        modelAndView.setViewName("redirect:/admin/products");
+        return modelAndView;
+    }
+
+    @GetMapping("/admin/show-form-update-product/{id}")
+    public ModelAndView showFormAddProduct(@PathVariable("id") long id,
+                                           HttpSession session){
+        ModelAndView modelAndView = new ModelAndView();
+        Product product = productService.findById(id);
+        ProductPrice lastProductPrice = product.getProductPrices().get(product.getProductPrices().size()-1);
+        User user = (User) session.getAttribute("adminSession");
+        modelAndView.addObject("adminSession", user);
+        modelAndView.addObject("product", product);
+        modelAndView.addObject("lastProductPrice", lastProductPrice);
+        modelAndView.setViewName("admin/update-product-form");
+        return modelAndView;
+    }
+
+    @PostMapping("/admin/update-product/{id}")
+    public ModelAndView updateProduct(HttpSession session,
+                                   @PathVariable("id") long id,
+                                   @ModelAttribute("product") Product product,
+                                   @ModelAttribute("lastProductPrice") ProductPrice lastProductPrice){
+        ModelAndView modelAndView = new ModelAndView();
+        Product product1 = productService.findById(id);
+        product1.setName(product.getName());
+        product1.setDescription(product.getDescription());
+        product1.setManufacturer(product.getManufacturer());
+        product1.setStatus(product.getStatus());
+        product1.setUnit(product.getUnit());
+        if(lastProductPrice.getPrice()!=product1.getProductPrices().get(product1.getProductPrices().size()-1).getPrice()){
+            List<ProductPrice> productPrices = product1.getProductPrices();
+            lastProductPrice.setPrice_date_time(LocalDateTime.now());
+            lastProductPrice.setProduct(product1);
+            productPrices.add(lastProductPrice);
+            product1.setProductPrices(productPrices);
+        }
+
+        productRepository.save(product1);
+        modelAndView.setViewName("redirect:/admin/products");
         return modelAndView;
     }
 }
