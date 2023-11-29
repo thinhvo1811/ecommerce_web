@@ -594,6 +594,7 @@
 .header__cart-item-remove{
     color: var(--text-color);
     font-size: 1.4rem;
+    text-decoration: none;
 }
 
 .header__cart-item-remove:hover{
@@ -621,12 +622,12 @@
     border-color: transparent transparent var(--white-color) transparent;
 }
 
-.header__cart-list--empty{
+.empty{
     padding: 48px 0;
 }
 
-.header__cart-list--empty .header__cart-empty-img,
-.header__cart-list--empty .header__cart-empty-message{
+.empty .header__cart-empty-img,
+.empty .header__cart-empty-message{
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -634,11 +635,9 @@
 
 .header__cart-empty-img{
     width: 26%;
-    display: none;
 }
 
 .header__cart-empty-message{
-    display: none;
     font-size: 1.4rem;
     margin-top: 14px;
     color: var(--text-color);

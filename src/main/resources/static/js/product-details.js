@@ -12,6 +12,9 @@ const backRegisterBtn = document.querySelector('.auth-form--register .btn.auth-f
 const backLoginBtn = document.querySelector('.auth-form--login .btn.auth-form__controls-back')
 const switchRegisterBtn = document.querySelector('.auth-form--register .auth-form__switch-btn')
 const switchLoginBtn = document.querySelector('.auth-form--login .auth-form__switch-btn')
+const quantityInput = document.querySelector('.product-detail__info-quantity-input')
+const addCartBtn = document.querySelector('.product-detail__info-btn--add-cart')
+const productIdInput = document.querySelector('#product_id')
 
 headerHistoryList.onmousedown = (e) => {
     e.preventDefault()
@@ -52,6 +55,13 @@ switchLoginBtn.onclick = () => {
     loginForm.style.display = "none"
     registerForm.style.display = "block"
 }
+
+addCartBtn.addEventListener('click', function() {
+    var quantityValue = quantityInput.value;
+    var productId = productIdInput.value;
+    var addToCartUrl = '/add-cart?id=' + productId + '&quantity=' + quantityValue;
+    this.href = addToCartUrl;
+});
 
 const getAllProducts = (keyword, callback) => {
     fetch(`/products-by-keyword/${keyword}`)

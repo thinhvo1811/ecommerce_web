@@ -109,19 +109,35 @@
                 <div class="header__cart">
                     <div class="header__cart-wrap">
                         <i class="header__cart-icon fas fa-shopping-cart"></i>
-                        <span class="header__cart-notice"></span>
+                        <span class="header__cart-notice" th:text="${session.items==null?0:session.items.size()}"></span>
 
                         <!-- Empty cart: header__cart-list--empty -->
-                        <div class="header__cart-list">
-                            <img th:src="@{/assets/img/empty_cart.png}" alt="" class="header__cart-empty-img">
-                            <span class="header__cart-empty-message">Chưa có sản phẩm</span>
+                        <div th:class="'header__cart-list ' + ${session.items==null ? ' empty' : ''}">
+                            <img th:if="${session.items==null}" alt="" class="header__cart-empty-img">
+                            <span th:if="${session.items==null}" class="header__cart-empty-message">Chưa có sản phẩm</span>
 
-                            <h4 class="header__cart-heading">Sản phẩm đã thêm</h4>
-                            <ul class="header__cart-list-item">
+                            <h4 th:if="${session.items!=null}" class="header__cart-heading">Sản phẩm đã thêm</h4>
+                            <ul th:if="${session.items!=null}" class="header__cart-list-item">
                                 <!-- Cart item -->
+                                <li th:if="${session.items!=null}" class="header__cart-item" th:each="item : ${session.items}">
+                                    <img th:if="${session.items!=null}" th:src="${item.getValue().product.productImageList[0].path}" alt="" class="header__cart-item-img">
+                                    <div class="header__cart-item-info">
+                                        <div class="header__cart-item-head">
+                                            <h5 th:if="${session.items!=null}" class="header__cart-item-name" th:text="${item.getValue().product.name}"></h5>
+                                            <div class="header__cart-item-price-wrap">
+                                                <span th:if="${session.items!=null}" class="header__cart-item-price" th:text="${#numbers.formatDecimal(item.getValue().product.productPrices[item.getValue().product.productPrices.size()-1].price, 0, 'COMMA', 0, 'POINT')} + 'đ '"></span>
+                                                <span class="header__cart-item-multiply">x</span>
+                                                <span th:if="${session.items!=null}" class="header__cart-item-quantity" th:text="${item.getValue().amount}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="header__cart-item-body">
+                                            <a class="header__cart-item-remove" th:href="@{/remove-cart(id = ${item.getValue().product.product_id})}">Xóa</a>
+                                        </div>
+                                    </div>
+                                </li>
                             </ul>
 
-                            <a href="#" class="header__cart-view-cart btn btn--primary">Xem giỏ hàng</a>
+                            <a th:if="${session.items!=null}" href="#" class="header__cart-view-cart btn btn--primary">Xem giỏ hàng</a>
                         </div>
                     </div>
                 </div>
