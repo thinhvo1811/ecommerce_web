@@ -30,7 +30,7 @@
                                 <a th:href="@{/admin/my-account}">Tài khoản của tôi</a>
                             </li>
                             <li class="navbar-user-item">
-                                <a href="#">Quản lý sản phẩm</a>
+                                <a th:href="@{/admin/products}">Quản lý sản phẩm</a>
                             </li>
                             <li class="navbar-user-item">
                                 <a th:href="@{/admin/order-statistics}">Thống kê đơn hàng</a>
@@ -52,39 +52,25 @@
         <div class="grid wide">
             <div class="row sm-gutter app__content">
                 <div class="col l-12 m-12 c-12">
-                    <h2 class="text-center mb-4">Danh sách sản phẩm</h2>
+                    <h2 class="text-center mb-4">Danh sách hình ảnh</h2>
                     <table class="table table-striped table-hover text-20"  style="width:100%">
                         <thead>
                         <tr>
-                            <th scope="col" style="width:40%">Name</th>
-                            <th scope="col">Manufacturer</th>
-                            <th scope="col">Unit</th>
-                            <th scope="col">Status</th>
+                            <th scope="col" style="width:40%">Path</th>
+                            <th scope="col" style="width:40%">Alternative</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="product, iStat: ${productPage.content}">
-                            <td th:text="${product.name}"></td>
-                            <td th:text="${product.manufacturer}"></td>
-                            <td th:text="${product.unit}"></td>
-                            <td th:text="${product.status.name()}"></td>
-                            <td><a class="text--primary" th:href="@{/admin/product-details/{id}(id=${product.product_id})}">Chi tiết</a></td>
-                            <td><a class="text--primary" th:href="@{/admin/show-form-update-product/{id}(id=${product.product_id})}">Sửa</a></td>
-                            <td><a class="text--primary" th:href="@{/admin/delete-product/{id}(id=${product.product_id})}">Xóa</a></td>
-                            <td><a class="text--primary" th:href="@{/admin/product-images/{id}(id=${product.product_id})}">Danh sách hình ảnh</a></td>
+                        <tr th:each="productImage : ${productImages}">
+                            <td th:text="${productImage.path}"></td>
+                            <td th:text="${productImage.alternative}"></td>
+                            <td><a class="text--primary" th:href="@{/admin/delete-product-image/{id}(id=${productImage.image_id})}">Xóa</a></td>
                         </tr>
                         </tbody>
                     </table>
-                    <a th:href="@{/admin/show-form-add-product}" role="button" class="add-product__btn btn btn--primary mt-3">
-                        Thêm sản phẩm
+                    <a th:href="@{/admin/show-form-add-product-image(productId=${productId})}" role="button" class="add-product__btn btn btn--primary mt-3">
+                        Thêm hình ảnh
                     </a>
-                    <nav aria-label="Page navigation example" class="d-flex justify-content-center">
-                        <ul class="pagination" th:if="${productPage.totalPages > 0}" th:each="pageNumber : ${pageNumbers}">
-                            <li th:class="${pageNumber==productPage.number + 1} ? active">
-                                <a class="page-link text--primary text-20" th:text="${pageNumber}" th:href="@{/admin/products(size=${productPage.size}, page=${pageNumber})}"></a>
-                            </li>
-                        </ul>
-                    </nav>
                 </div>
             </div>
         </div>

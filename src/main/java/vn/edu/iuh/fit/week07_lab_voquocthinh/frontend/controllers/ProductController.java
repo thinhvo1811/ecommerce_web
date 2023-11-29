@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.enums.EmployeeStatus;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.enums.ProductStatus;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.models.*;
+import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.repositories.ProductImageRepository;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.repositories.ProductRepository;
 import vn.edu.iuh.fit.week07_lab_voquocthinh.backend.services.ProductService;
 
@@ -25,6 +26,8 @@ public class ProductController {
     private ProductRepository productRepository;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ProductImageRepository productImageRepository;
 
     @GetMapping("/home")
     public String showHomePage(
@@ -376,6 +379,55 @@ public class ProductController {
 
         productRepository.save(product1);
         modelAndView.setViewName("redirect:/admin/products");
+        return modelAndView;
+    }
+
+    @GetMapping("/admin/product-images/{id}")
+    public ModelAndView showProductImages(HttpSession session,
+                                      @PathVariable("id") long id){
+        ModelAndView modelAndView = new ModelAndView();
+        Product product = productService.findById(id);
+        List<ProductImage> productImages = product.getProductImageList();
+        modelAndView.addObject("productImages", productImages);
+        User user = (User) session.getAttribute("adminSession");
+        modelAndView.addObject("adminSession", user);
+        modelAndView.addObject("productId", id);
+
+        modelAndView.setViewName("admin/product-images");
+        return modelAndView;
+    }
+
+    @GetMapping("/admin/delete-product-image/{id}")
+    public String deleteProductImage(
+            @PathVariable("id") long id
+    ){
+        Product product = productImageRepository.findById(id).get().getProduct();
+        productImageRepository.deleteById(id);
+        return "redirect:/admin/product-images/"+product.getProduct_id();
+    }
+
+    @GetMapping("/admin/show-form-add-product-image")
+    public ModelAndView showFormAddProductImage(HttpSession session,
+                                                @RequestParam("productId") long productId){
+        ModelAndView modelAndView = new ModelAndView();
+        ProductImage productImage = new ProductImage();
+        User user = (User) session.getAttribute("adminSession");
+        modelAndView.addObject("adminSession", user);
+        modelAndView.addObject("productImage", productImage);
+        modelAndView.addObject("productId", productId);
+        modelAndView.setViewName("admin/add-product-image-form");
+        return modelAndView;
+    }
+
+    @PostMapping("/admin/add-product-image")
+    public ModelAndView addProduct(HttpSession session,
+                                   @ModelAttribute("productImage") ProductImage productImage,
+                                   @RequestParam("productId") long productId){
+        ModelAndView modelAndView = new ModelAndView();
+        Product product = productRepository.findById(productId).get();
+        productImage.setProduct(product);
+        productImageRepository.save(productImage);
+        modelAndView.setViewName("redirect:/admin/product-images/"+productId);
         return modelAndView;
     }
 }
