@@ -194,7 +194,7 @@ html{
 }
 
 .text--primary{
-    color: var(--primary-color);
+    color: var(--primary-color) !important;
 }
 
 .hidden{
@@ -216,3 +216,8 @@ html{
 .right{
     float: right !important;
 }
+
+.text-20{
+    font-size: 14px;
+}
+

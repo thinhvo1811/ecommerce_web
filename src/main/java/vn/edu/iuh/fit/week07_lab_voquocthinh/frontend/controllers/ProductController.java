@@ -269,4 +269,50 @@ public class ProductController {
         modelAndView.setViewName("admin/product-price-chart");
         return modelAndView;
     }
+
+    @GetMapping("/admin/products")
+    public String showProductList(
+            Model model,
+            @RequestParam("page") Optional<Integer> page,
+            @RequestParam("size") Optional<Integer> size,
+            HttpSession session
+    ){
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(10);
+
+        Page<Product> productPage = productService.findByStatusIsNotTerminatedAndSortBySoldQuantity(currentPage - 1, pageSize);
+        model.addAttribute("productPage", productPage);
+        User user = (User) session.getAttribute("adminSession");
+        model.addAttribute("adminSession", user);
+        int totalPage = productPage.getTotalPages();
+        if (totalPage > 0){
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPage)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+        return "admin/product-list-paging";
+    }
+
+    @GetMapping("/admin/delete-product/{id}")
+    public String deleteProduct(
+            @PathVariable("id") long id
+    ){
+        Product product = productRepository.findById(id).get();
+        product.setStatus(ProductStatus.TERMINATED);
+        productRepository.save(product);
+        return "redirect:/admin/products";
+    }
+
+    @GetMapping("/admin/product-details/{id}")
+    public ModelAndView showProductDetailAdmin(@PathVariable("id") Long id,
+                                          HttpSession session){
+        ModelAndView modelAndView = new ModelAndView();
+        Product product = productService.findById(id);
+        User user = (User) session.getAttribute("adminSession");
+        modelAndView.addObject("adminSession", user);
+        modelAndView.addObject("product", product);
+        modelAndView.setViewName("admin/product-details-for-admin");
+        return modelAndView;
+    }
 }

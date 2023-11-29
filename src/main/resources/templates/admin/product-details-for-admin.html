@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopee</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" >
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link rel="stylesheet" th:href="@{/css/base.css}">
     <link rel="stylesheet" th:href="@{/css/main.css}">
@@ -14,7 +11,6 @@
     <link rel="stylesheet" th:href="@{/css/responsive.css}">
     <link th:href="@{/assets/fonts/fontawesome-free-6.4.0-web/css/all.min.css}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <script src="https://code.highcharts.com/highcharts.js"></script>
 </head>
 <body>
 <div class="app">
@@ -37,7 +33,7 @@
                                 <a th:href="@{/admin/order-statistics}">Thống kê đơn hàng</a>
                             </li>
                             <li class="navbar-user-item">
-                                <a href="#">Vẽ biểu đồ giá</a>
+                                <a th:href="@{/admin/product-price-chart}">Vẽ biểu đồ giá</a>
                             </li>
                             <li class="navbar-user-item navbar-user-item--separate navbar-user-item__logout">
                                 <a th:href="@{/admin/logout}">Đăng xuất</a>
@@ -53,18 +49,35 @@
         <div class="grid wide">
             <div class="row sm-gutter app__content">
                 <div class="col l-12 m-12 c-12">
-                    <div class="product-chart hide-on-mobile-tablet">
-                        <div class="product-chart__select-product">
-                            <label for="product">Chọn sản phẩm:</label>
-                            <select name="product" id="product" class="product-chart__product-list">
-                                <option th:each="product : ${products}" th:value="${product.product_id}" th:text="${product.name}"></option>
-                            </select>
+                    <div class="product-detail">
+                        <div class="row sm-gutter">
+                            <div class="col l-5 m-5 c-5">
+                                <div class="product-detail__img">
+                                    <div class="product-detail__img-main" th:style="'background-image:url('+ ${product.productImageList[0].path} +');'">
+
+                                    </div>
+                                    <div class="product-detail__img-list">
+                                        <ul class="product-detail__img-list--list">
+                                            <li th:each="img: ${product.productImageList}" class="product-detail__img-list--item" th:style="'background-image:url('+ ${img.path} +');'"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col l-7 m-7 c-7">
+                                <div class="product-detail__info">
+                                    <div class="product-detail__info-header">
+                                        <input id="product_id" type="hidden" th:field="${product.product_id}">
+                                        <div class="product-detail__info-name" th:text="${product.name}"></div>
+                                        <div class="product-detail__info-sold-quantity text--primary" th:text="${product.getSoldQuantity()} + ' đã bán'"></div>
+                                        <div class="product-detail__info-sold-quantity" th:text="'Nhà sản xuất: ' + ${product.getManufacturer()}"></div>
+                                        <div class="product-detail__info-sold-quantity" th:text="'Mô tả: ' + ${product.getDescription()}"></div>
+                                        <div class="product-detail__info-sold-quantity" th:text="'Đơn vị tính: ' + ${product.getUnit()}"></div>
+                                        <div class="product-detail__info-sold-quantity" th:text="'Tình trạng: ' + ${product.getStatus().name()}"></div>
+                                        <div class="product-detail__info-price" th:text="${#numbers.formatDecimal(product.productPrices[product.productPrices.size()-1].price, 0, 'COMMA', 0, 'POINT')} + 'đ '"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <button class="product-chart__btn btn btn--primary">Vẽ biểu đồ</button>
-                    </div>
-
-                    <div id="product-chart__chart">
-
                     </div>
                 </div>
             </div>
@@ -164,6 +177,6 @@
         </div>
     </footer>
 </div>
-<script th:src="@{/js/product-price-chart.js}"></script>
+<script th:src="@{/js/product-details-for-admin.js}"></script>
 </body>
 </html>
