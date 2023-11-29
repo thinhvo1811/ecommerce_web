@@ -112,22 +112,22 @@
                         <span class="header__cart-notice" th:text="${session.items==null?0:session.items.size()}"></span>
 
                         <!-- Empty cart: header__cart-list--empty -->
-                        <div th:class="'header__cart-list ' + ${session.items.size()==0 ? ' empty' : ''}">
-                            <img th:src="@{/assets/img/empty_cart.png}" th:if="${session.items.size()==0}" alt="" class="header__cart-empty-img">
-                            <span th:if="${session.items.size()==0}" class="header__cart-empty-message">Chưa có sản phẩm</span>
+                        <div th:class="'header__cart-list ' + ${session.items==null || session.items.size()==0 ? ' empty' : ''}">
+                            <img th:src="@{/assets/img/empty_cart.png}" th:if="${session.items==null || session.items.size()==0}" alt="" class="header__cart-empty-img">
+                            <span th:if="${session.items==null || session.items.size()==0}" class="header__cart-empty-message">Chưa có sản phẩm</span>
 
-                            <h4 th:if="${session.items.size()!=0}" class="header__cart-heading">Sản phẩm đã thêm</h4>
-                            <ul th:if="${session.items.size()!=0}" class="header__cart-list-item">
+                            <h4 th:if="${session.items!=null && session.items.size()!=0}" class="header__cart-heading">Sản phẩm đã thêm</h4>
+                            <ul th:if="${session.items!=null && session.items.size()!=0}" class="header__cart-list-item">
                                 <!-- Cart item -->
-                                <li th:if="${session.items.size()!=0}" class="header__cart-item" th:each="item : ${session.items}">
-                                    <img th:if="${session.items.size()!=0}" th:src="${item.getValue().product.productImageList[0].path}" alt="" class="header__cart-item-img">
+                                <li th:if="${session.items!=null && session.items.size()!=0}" class="header__cart-item" th:each="item : ${session.items}">
+                                    <img th:if="${session.items!=null && session.items.size()!=0}" th:src="${item.getValue().product.productImageList[0].path}" alt="" class="header__cart-item-img">
                                     <div class="header__cart-item-info">
                                         <div class="header__cart-item-head">
-                                            <h5 th:if="${session.items.size()!=0}" class="header__cart-item-name" th:text="${item.getValue().product.name}"></h5>
+                                            <h5 th:if="${session.items!=null && session.items.size()!=0}" class="header__cart-item-name" th:text="${item.getValue().product.name}"></h5>
                                             <div class="header__cart-item-price-wrap">
-                                                <span th:if="${session.items.size()!=0}" class="header__cart-item-price" th:text="${#numbers.formatDecimal(item.getValue().product.productPrices[item.getValue().product.productPrices.size()-1].price, 0, 'COMMA', 0, 'POINT')} + 'đ '"></span>
+                                                <span th:if="${session.items!=null && session.items.size()!=0}" class="header__cart-item-price" th:text="${#numbers.formatDecimal(item.getValue().product.productPrices[item.getValue().product.productPrices.size()-1].price, 0, 'COMMA', 0, 'POINT')} + 'đ '"></span>
                                                 <span class="header__cart-item-multiply">x</span>
-                                                <span th:if="${session.items.size()!=0}" class="header__cart-item-quantity" th:text="${item.getValue().amount}"></span>
+                                                <span th:if="${session.items!=null && session.items.size()!=0}" class="header__cart-item-quantity" th:text="${item.getValue().amount}"></span>
                                             </div>
                                         </div>
                                         <div class="header__cart-item-body">
@@ -137,7 +137,7 @@
                                 </li>
                             </ul>
 
-                            <a th:if="${session.items.size()!=0}" href="#" class="header__cart-view-cart btn btn--primary">Xem giỏ hàng</a>
+                            <a th:if="${session.items!=null && session.items.size()!=0}" href="#" class="header__cart-view-cart btn btn--primary">Xem giỏ hàng</a>
                         </div>
                     </div>
                 </div>
