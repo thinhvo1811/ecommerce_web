@@ -1,13 +1,3 @@
-## Giới thiệu:
-- ✍ Môn học: Lập trình WWW (Java)
-- ✍ Chủ đề: Bài tập tuần 07
-<br />
-
-## Đề bài:
-<img src="img/Screenshot 2023-11-29 203045.png"/>
-<br />
-
-## Bài làm:
 I. Trang web cho khách hàng
 <p></p>
 1. Trang Home
